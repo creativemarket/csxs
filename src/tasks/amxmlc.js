@@ -13,7 +13,8 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-var fs = require('fs');
+var _     = require('lodash');
+var fs    = require('fs');
 var spawn = require('child_process').spawn;
 
 /**
@@ -38,6 +39,8 @@ roto.defineTask('csxs.amxmlc', function(callback, options) {
 			.replace(/^\s+/, '') // leading line breaks
 			.replace(/\s+$/, ''); // trailing line breaks
 	};
+
+	// base compiler args
 	var args = [
 		'-verify-digests',
 		'-warnings=true',
@@ -46,17 +49,41 @@ roto.defineTask('csxs.amxmlc', function(callback, options) {
 		'-compiler.show-binding-warnings=true',
 		'-compiler.show-deprecation-warnings=true',
 		'-compiler.debug=' + String(options.profile === 'debug'),
-		'-includes=mx.managers.systemClasses.MarshallingSupport',
 		'-locale=en_US',
 		'-output=' + options.path_output,
-		'-library-path+=' + config.flex[options.ver_flex].join(','),
-		'-define=CONFIG::debug,' + String(options.profile === 'debug'),
-		'-define=CONFIG::release,' + String(options.profile === 'release'),
-		'-define=CONFIG::version,"' + config.version + '"',
-		'--source-path', options.path_src, '--', options.path_mxml
+		'-library-path+=' + config.flex[options.ver_flex].join(',')
 	];
-	console.log(roto.colorize('amxmlc ' + args.join(' '), 'magenta'));
 
+	// conditional compiler args
+	var properties = _.extend({
+		'debug'   : options.profile === 'debug',
+		'release' : options.profile === 'release',
+		'version' : config.version
+	}, config.properties);
+
+	// user defined constants
+	var key, value;
+	for (key in properties) {
+		value = properties[key];
+		if (value && typeof value === 'object') {
+			value = value[options.profile];
+		}
+		if (properties.hasOwnProperty(key) && ((typeof value !== 'object' && typeof value !== 'array') || properties[key] === null)) {
+			args.push('-define=CONFIG::' + key + ',' + JSON.stringify(value));
+		}
+	}
+
+	if (parseInt(options.ver_flex, 10) >= 4) {
+		args.push('-includes=mx.managers.systemClasses.MarshallingSupport');
+	}
+
+	args.push('--source-path');
+	args.push(options.path_src);
+	args.push('--');
+	args.push(options.path_mxml);
+
+	// execute compiler
+	console.log(roto.colorize('amxmlc ' + args.join(' '), 'magenta'));
 	var amxmlc = spawn(options.path_amxmlc, args);
 	amxmlc.stdout.on('data', function (data) { console.log(beautify(data)); });
 	amxmlc.stderr.on('data', function (data) { console.error(beautify(data)); });

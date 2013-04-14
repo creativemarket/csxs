@@ -86,6 +86,7 @@ roto.addTarget('compile', {
 			console.error('"' + path_amxmlc + '"');
 			return callback(false);
 		}
+
 		callback();
 	});
 

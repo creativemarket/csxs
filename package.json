@@ -13,6 +13,7 @@
 	"preferGlobal": true,
 	"dependencies": {
 		"roto": "0.3.X",
+		"lodash": "1.1.X",
 		"optimist": "0.3.X"
 	},
 	"devDependencies": {},

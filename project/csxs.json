@@ -10,6 +10,7 @@
 	"cs-version": "6",
 	"flex-version": "3.4.0",
 	"update": "http://s3.amazonaws.com/{{s3-bucket}}/releases/update.xml",
+	"properties": {},
 	"certificate": {
 		"location": "certificate.p12",
 		"password": "password"
@@ -31,7 +32,6 @@
 		"min": {"width": 324, "height": 300},
 		"max": {"width": 800, "height": 2400}
 	},
-
 	"s3": {
 		"key": "",
 		"secret": "",
