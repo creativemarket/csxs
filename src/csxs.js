@@ -13,4 +13,4 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-module.exports = {};
+module.exports = null;

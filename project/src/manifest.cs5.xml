@@ -20,8 +20,8 @@
 		<Extension Id="{{id}}">
 			<DispatchInfo>
 				<Resources>
-					<SwfPath>./{{id}}.swf</SwfPath>
-					<ScriptPath>./{{id}}.jsx</ScriptPath>
+					<SwfPath>./{{basename}}.swf</SwfPath>
+					<ScriptPath>./{{basename}}.jsx</ScriptPath>
 				</Resources>
 				<Lifecycle>
 					<AutoVisible>true</AutoVisible>

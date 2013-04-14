@@ -16,18 +16,26 @@
 var fs = require('fs');
 
 
-roto.addTarget('create', {
-	description: 'Creates a new Creative Suite project in the current directory.'
-}, function(options) {
+roto.defineTask('csxs.config_load', function(callback){
+	var path = process.cwd() + '/csxs.json';
 
-	// check for empty working directory
-	roto.addTask(function(callback) {
-		var files = fs.readdirSync('.');
-		if (files && files.length) {
-			console.error(roto.colorize('ERROR: ', 'red') + 'Working directory must be empty.');
+	var read = function(callback) {
+		if (!fs.existsSync(path)) return callback('File not found.');
+		try { data = JSON.parse(fs.readFileSync(path, 'utf8')); }
+		catch (e) { return callback('Unable to parse JSON.'); }
+
+		data.basename = data.basename || data.id;
+		callback(null, data);
+	};
+
+	if (config) return callback();
+	read(function(err, data) {
+		if (err) {
+			console.error(roto.colorize('ERROR: ', 'red') + 'Unable to read "csxs.json" at project root.');
+			console.error('       ' + err);
 			return callback(false);
 		}
-		return callback();
+		config = data;
+		callback();
 	});
-
 });

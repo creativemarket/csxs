@@ -13,6 +13,7 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
+var spawn = require('child_process').spawn;
 var git = module.exports = {};
 
 /**
@@ -27,21 +28,26 @@ var git = module.exports = {};
 git.status = function(callback) {
 	var result = {clean: false, branch : null};
 
-	var process = spawn('git', ['status']);
-	process.stdout.on('data', function(data) {
+	var proc = spawn('git', ['status']);
+	proc.stdout.on('data', function(data) {
 		var str = data.toString();
+		if (str.indexOf('Not a git repository')) {
+			result = null;
+		}
 
-		// parse branch information
-		var branch = str.match(/On branch ([^\n]+)/);
-		result.branch = branch && branch[1].replace(/^\s+|\s+$/, '');
+		if (result) {
+			// parse branch information
+			var branch = str.match(/On branch ([^\n]+)/);
+			result.branch = branch && branch[1].replace(/^\s+|\s+$/, '');
 
-		// parse working directory status
-		if (str.indexOf('working directory clean') !== -1) {
-			result.clean = true;
+			// parse working directory status
+			if (str.indexOf('working directory clean') !== -1) {
+				result.clean = true;
+			}
 		}
 	});
 
-	process.on('exit', function() {
+	proc.on('exit', function() {
 		callback(result);
 	});
 };

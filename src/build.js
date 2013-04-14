@@ -13,18 +13,25 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-// read csxs.json in project folder
-// var fs = require('fs');
-// var path_package = process.cwd() + '/csxs.json';
-
 global.IS_WINDOWS = !!process.platform.match(/^win/);
 global.IS_MAC     = !IS_WINDOWS;
+global.config     = null;
+global.roto       = null;
 
 module.exports = function(roto) {
-	require('./targets/changelogs.js')(roto);
-	require('./targets/create.js')(roto);
-	require('./targets/compile.js')(roto);
-	require('./targets/configure.js')(roto);
-	require('./targets/package.js')(roto);
-	require('./targets/release.js')(roto);
+	global.roto = roto;
+	roto.defaultTarget = null;
+
+	require('./tasks/config.js');
+	require('./tasks/git.js');
+	require('./tasks/fs.js');
+	require('./tasks/ucf.js');
+	require('./tasks/amxmlc.js');
+
+	require('./targets/changelogs.js');
+	require('./targets/create.js');
+	require('./targets/compile.js');
+	require('./targets/configure.js');
+	require('./targets/package.js');
+	require('./targets/release.js');
 };

@@ -20,143 +20,138 @@ var exec   = require('child_process').exec;
 var http   = require('http');
 var git    = require('../lib/git.js');
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-module.exports = function(roto) {
-	roto.addTarget('release', {
-		description: 'Builds, signs, and uploads the *.zxp installer.'
-	}, function(options) {
-		var bucket             = pkg.s3.bucket;
-		var file_zxp_versioned = 'ID.' + config.version + '.zxp';
-		var file_zxp           = 'ID.zxp';
-		var url_zxp            = 'http://' + pkg.s3.bucket + '/releases/' + file_zxp_versioned;
-		var path_changelog     = 'changelogs/' + config.version + '.txt';
-		var changes            = '';
+roto.addTarget('release', {
+	description: 'Builds, signs, and uploads the *.zxp installer.'
+}, function(options) {
 
-		// read changelog file
+	var changes;
+	var changes_html;
+	var file_zxp_versioned;
+	var file_zxp;
+	var url_zxp;
+	var path_changelog;
+
+	// load project configuration to `config` global
+	roto.addTask('csxs.config_load');
+
+	// deploy settings
+	roto.addTask(function(callback) {
+		file_zxp_versioned = config.basename + '.' + config.version + '.zxp';
+		file_zxp           = config.basename + '.zxp';
+		url_zxp            = 'http://' + config.s3.bucket + '/releases/' + file_zxp_versioned;
+		path_changelog     = 'changes/' + config.version + '.txt';
+		changes            = '';
+
+		callback();
+	});
+
+	// read changes
+	roto.addTask(function(callback) {
 		try {
 			changes = fs.readFileSync(path_changelog, 'utf8');
 		} catch (e) {
 			console.error(roto.colorize('ERROR: ', 'red') + '"' + path_changelog + '" must exist.');
-			return false;
+			return callback(false);
 		}
+		callback();
+	});
 
-		// assemble update.xml description
+	// build "update.xml" description (html)
+	roto.addTask(function(callback) {
 		var version;
-		var changes_html = '<dl>';
 		var changelogs = getChangelogs();
+		changes_html = '<dl>';
+
 		for (var i = changelogs.length - 1, i0 = Math.max(0, i - 2); i >= i0; i--) {
 			version = 'v' + path.basename(changelogs[i], '.txt');
 			changes_html += '<dt><b>' + version + '</b></dt>';
 			changes_html += '<dd>' + fs.readFileSync(changelogs[i], 'utf8').replace(/\r?\n/g, '<br>') + '</dd>';
 		}
 		changes_html += '</dl>';
+	});
 
-		// generate new master changelog files
-		roto.addTask('target:changelogs');
+	// generate new master changelog files
+	roto.addTask('target:changelogs');
 
-		// check to see if this version has already been released
-		roto.addTask(function(callback) {
-			http.request({
-				hostname: pkg.s3.bucket,
-				port: 80,
-				path: '/releases/' + file_zxp_versioned,
-				method: 'HEAD'
-			}, function(res) {
-				if (res.statusCode === 200) {
-					if (options.force) {
-						console.error(roto.colorize('WARNING:', 'yellow') + ' v' + config.version + ' has already been released.');
-						callback();
-					} else {
-						console.error(roto.colorize('ERROR:', 'red') + ' v' + config.version + ' has already been released. Run with --force to ignore.');
-						callback(false);
-					}
-				} else {
-					callback();
-				}
-			}).end();
-		});
-
-		// check for clean working directory
-		roto.addTask(function(callback) {
-			git.status(function(status) {
-				if (status.clean) {
+	// check to see if this version has already been released
+	roto.addTask(function(callback) {
+		http.request({
+			hostname : config.s3.bucket,
+			port     : 80,
+			path     : '/releases/' + file_zxp_versioned,
+			method   : 'HEAD'
+		}, function(res) {
+			if (res.statusCode === 200) {
+				if (options.force) {
+					console.error(roto.colorize('WARNING:', 'yellow') + ' v' + config.version + ' has already been released.');
 					callback();
 				} else {
-					roto.error(roto.colorize('ERROR:', 'red') + ' You must commit modified files before issuing a public release.\n');
+					console.error(roto.colorize('ERROR:', 'red') + ' v' + config.version + ' has already been released. Run with --force to ignore.');
 					callback(false);
 				}
-			});
-		});
+			} else {
+				callback();
+			}
+		}).end();
+	});
 
-		// build fresh copy
-		roto.addTask('target:package');
+	// check for clean working directory
+	roto.addTask('csxs.git_is_clean');
 
-		// create staged files
-		roto.addTask('dir-remove', {path: 'temp'});
-		roto.addTask('dir-copy', {from: 'changelogs', to: 'temp/changelogs'});
-		roto.addTask(function(callback) {
-			copySync(file_zxp_versioned, 'temp/' + file_zxp, 'binary');
-			callback();
-		});
-		roto.addTask(function(callback) {
-			copySync(file_zxp_versioned, 'temp/' + file_zxp_versioned, 'binary');
-			callback();
-		});
+	// build fresh copy
+	roto.addTask('target:package');
 
-		// update.json
-		roto.addTask(function(callback) {
-			var info = {
-				version: config.version,
-				description: changes,
-				url: url_zxp
-			};
+	// create staged files
+	roto.addTask('dir-remove', {path: 'temp'});
+	roto.addTask('dir-copy', {from: 'changes', to: 'temp/changes'});
+	roto.addTask('csxs.fs_copy', {from: file_zxp_versioned, to: 'temp/' + file_zxp});
+	roto.addTask('csxs.fs_copy', {from: file_zxp_versioned, to: 'temp/' + file_zxp_versioned});
 
-			roto.writeFile('temp/update.json', JSON.stringify(info), 'utf8');
-			callback();
-		});
+	// update.json
+	roto.addTask(function(callback) {
+		var info = {
+			'version': config.version,
+			'description': changes,
+			'url': url_zxp
+		};
 
-		// update.xml
-		roto.addTask('template', {
-			files  : 'src/update.xml',
-			output : 'temp/update.xml',
-			data   : {
+		roto.writeFile('temp/update.json', JSON.stringify(info), 'utf8');
+		callback();
+	});
+
+	// update.xml
+	roto.addTask('template', function() {
+		return {
+			files   : 'src/update.xml',
+			output  : 'temp/update.xml',
+			data    : {
 				version: config.version,
 				description: changes_html,
 				url: url_zxp
 			}
-		});
-
-		// sync to s3
-		roto.addTask('s3', {
-			key: pkg.s3.key,
-			secret: pkg.s3.secret,
-			bucket: bucket,
-			folder: 'temp',
-			destination: 'releases',
-			ttl: 0
-		});
-
-		// create git tag
-		roto.addTask(function(callback) {
-			var args = ['tag', '--force', 'v' + config.version];
-			console.log(roto.colorize('git ' + args.join(' '), 'magenta'));
-			var git = spawn('git', args);
-			git.on('exit', function(code) { callback(); });
-		});
-		roto.addTask(function(callback) {
-			var args = ['push', 'origin', '--tags'];
-			console.log(roto.colorize('git ' + args.join(' '), 'magenta'));
-			var git = spawn('git', args);
-			git.on('exit', function(code) { callback(); });
-		});
-
-		// completion
-		roto.addTask('dir-remove', {path: 'temp'});
-		roto.addTask(function(callback) {
-			console.log(roto.colorize('v' + config.version + ' successfully released.', 'green'));
-			callback();
-		});
-
+		};
 	});
-};
+
+	// sync to s3
+	roto.addTask('s3', {
+		key         : config.s3.key,
+		secret      : config.s3.secret,
+		bucket      : config.s3.bucket,
+		folder      : 'temp',
+		destination : 'releases',
+		ttl         : 0
+	});
+
+	// create git tag
+	roto.addTask('csxs.git_tag', function() { return {name: 'v' + config.version}; });
+	roto.addTask('csxs.git_push_tags');
+
+	// completion
+	roto.addTask('dir-remove', {path: 'temp'});
+	roto.addTask(function(callback) {
+		console.log(roto.colorize('v' + config.version + ' successfully released.', 'green'));
+		callback();
+	});
+
+});

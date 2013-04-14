@@ -13,63 +13,61 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-var fs     = require('fs');
-var path   = require('path');
-var spawn  = require('child_process').spawn;
-var exec   = require('child_process').exec;
+var fs      = require('fs');
+var path    = require('path');
+var spawn   = require('child_process').spawn;
 
-module.exports = function(roto) {
-	roto.addTarget('configure', {
-		description: 'Configures build environment (Determines CS and Flex SDK locations).'
-	}, function(options) {
 
-		roto.addTask(function(callback) {
-			if (!process.env.CSSDK || !fs.existsSync(process.env.CSSDK)) {
-				console.error(roto.colorize('ERROR: ', 'red') + 'Unable to find Adobe Creative Suite SDK.');
-				console.error('Download it and set CSSDK to its location.');
-				console.error(roto.colorize('http://www.adobe.com/devnet/creativesuite.html', 'underline'));
-				console.error(roto.colorize('export CSSDK=(path)', 'gray'));
-				return callback(false);
-			} else {
-				console.log('CSSDK=' + process.env.CSSDK);
-			}
-			callback();
-		});
+roto.addTarget('configure', {
+	description: 'Configures build environment (Determines CS and Flex SDK locations).'
+}, function(options) {
 
-		// configuration for flash builder
-		roto.addTask(function(callback) {
-			if (options.debug !== false) {
-				config.id   += '.debug';
-				config.name += ' (debug)';
-			}
-			callback();
-		});
-
-		roto.addTask('template', {
-			files  : 'src/ID.mxi',
-			output : './ID.mxi',
-			data   : config
-		});
-
-		// (only used by flash builder)
-		if (IS_MAC) {
-			var symlink = function(from, to) {
-				roto.addTask(function(callback) {
-					var args = ['-s', from, to];
-					console.log(roto.colorize('ln ' + args.join(' '), 'magenta'));
-					var ln = spawn('ln', args);
-					ln.on('exit', function() { callback(); });
-				});
-			};
-
-			symlink('./src/ID.jsx', './ID.jsx');
+	// load project configuration to `config` global
+	roto.addTask('csxs.config_load');
+	roto.addTask(function(callback) {
+		if (options.debug !== false) {
+			config.id   += '.debug';
+			config.name += ' (debug)';
 		}
+		callback();
+	});
 
-		roto.addTask('template', {
+	// check for creative suite sdk
+	roto.addTask(function(callback) {
+		if (!process.env.CSSDK || !fs.existsSync(process.env.CSSDK)) {
+			console.error(roto.colorize('ERROR: ', 'red') + 'Unable to find Adobe Creative Suite SDK.');
+			console.error('Download it and set CSSDK to its location.');
+			console.error(roto.colorize('http://www.adobe.com/devnet/creativesuite.html', 'underline'));
+			console.error(roto.colorize('export CSSDK=(path)', 'gray'));
+			return callback(false);
+		} else {
+			console.log('CSSDK=' + process.env.CSSDK);
+		}
+		callback();
+	});
+
+	// generate configuration for flash builder
+	roto.addTask('template', function() {
+		return {
+			files  : 'src/' + config.basename + '.mxi',
+			output : './' + config.basename + '.mxi',
+			data   : config
+		};
+	});
+
+	roto.addTask('csxs.fs_symlink', function() {
+		return {
+			from: './src/' + config.basename + '.jsx',
+			to: './' + config.basename + '.jsx'
+		};
+	});
+
+	roto.addTask('template', function() {
+		return {
 			files  : 'src/manifest.cs6.xml',
 			output : '.staged-extension/CSXS/manifest.xml',
 			data   : config
-		});
-
+		};
 	});
-};
+
+});

@@ -14,20 +14,24 @@
  */
 
 var fs = require('fs');
+var spawn = require('child_process').spawn;
 
 
-roto.addTarget('create', {
-	description: 'Creates a new Creative Suite project in the current directory.'
-}, function(options) {
+roto.defineTask('csxs.fs_copy', function(callback, options) {
+	if (!fs.existsSync(options.from)) {
+		console.error(roto.colorize('ERROR: ', 'red') + 'File not found "' + options.from + '".');
+		return callback(false);
+	}
+	var content = fs.readFileSync(options.from, 'binary');
+	fs.writeFileSync(options.to, content, 'binary');
+	callback();
+});
 
-	// check for empty working directory
-	roto.addTask(function(callback) {
-		var files = fs.readdirSync('.');
-		if (files && files.length) {
-			console.error(roto.colorize('ERROR: ', 'red') + 'Working directory must be empty.');
-			return callback(false);
-		}
-		return callback();
-	});
+roto.defineTask('csxs.fs_symlink', function(callback, options) {
+	// TODO: copy on windows?
 
+	var args = ['-s', options.from, options.to];
+	console.log(roto.colorize('ln ' + args.join(' '), 'magenta'));
+	var ln = spawn('ln', args);
+	ln.on('exit', function() { callback(); });
 });

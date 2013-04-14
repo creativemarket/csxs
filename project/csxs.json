@@ -1,38 +1,37 @@
 {
-	"project": {
-		"uuid": "{{uuid}}",
-		"version": "1.0.0",
-		"id": "{{id}}",
-		"name": "{{name}}",
-		"author": "{{author}}",
-		"description": "",
-		"license-agreement": "",
-		"ui-access": "You can run this extension by choosing<br><b>Window &gt; Extensions &gt; {{name}}.</b>",
-		"cs-version": "6",
-		"flex-version": "3.4.0",
-		"update": "http://cse.creativemarket.com/releases/update.xml",
-		"certificate": {
-			"location": "certificate.p12",
-			"password": "password"
+	"uuid": "{{uuid}}",
+	"version": "1.0.0",
+	"id": "{{id}}",
+	"name": "{{name}}",
+	"author": "{{author}}",
+	"description": "",
+	"license-agreement": "",
+	"ui-access": "You can run this extension by choosing<br><b>Window &gt; Extensions &gt; {{name}}.</b>",
+	"cs-version": "6",
+	"flex-version": "3.4.0",
+	"update": "http://s3.amazonaws.com/{{s3-bucket}}/releases/update.xml",
+	"certificate": {
+		"location": "certificate.p12",
+		"password": "password"
+	},
+	"icons": {
+		"light": {
+			"normal": "./assets/icon.png",
+			"hover": "./assets/icon-hover.png",
+			"disabled": "./assets/icon-disabled.png"
 		},
-		"icons": {
-			"light": {
-				"normal": "./assets/icon.png",
-				"hover": "./assets/icon-hover.png",
-				"disabled": "./assets/icon-disabled.png"
-			},
-			"dark": {
-				"normal": "./assets/icon-dark.png",
-				"hover": "./assets/icon-dark-hover.png",
-				"disabled": "./assets/icon-dark-disabled.png"
-			}
-		},
-		"size": {
-			"normal": {"width": 324, "height": 400},
-			"min": {"width": 324, "height": 300},
-			"max": {"width": 800, "height": 2400}
+		"dark": {
+			"normal": "./assets/icon-dark.png",
+			"hover": "./assets/icon-dark-hover.png",
+			"disabled": "./assets/icon-dark-disabled.png"
 		}
 	},
+	"size": {
+		"normal": {"width": 324, "height": 400},
+		"min": {"width": 324, "height": 300},
+		"max": {"width": 800, "height": 2400}
+	},
+
 	"s3": {
 		"key": "",
 		"secret": "",

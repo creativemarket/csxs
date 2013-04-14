@@ -18,77 +18,65 @@ var path   = require('path');
 var spawn  = require('child_process').spawn;
 var exec   = require('child_process').exec;
 
-module.exports = function(roto) {
-	roto.addTarget('package', {
-		description: 'Generates signed *.zxp installer ready for distribution.'
-	}, function(options) {
-		var selfsign       = options['self-sign'];
-		var folder_build   = './build/bin-release';
-		var folder_package = './package';
-		var keystore       = selfsign ? 'certificate-dev.p12' : config.certificate.location;
-		var password       = selfsign ? 'password' : config.certificate.password;
 
-		var build_zxp = function(options) {
-			roto.addTask(function(callback) {
-				var args = [
-					'-jar',
-					'./tools/ucf.jar',
-					'-package',
-					'-storetype', 'PKCS12',
-					'-keystore', keystore,
-					'-storepass', password,
-					'-tsa', 'https://timestamp.geotrust.com/tsa',
-					options.output,
-					'-C', options.input, '.'
-				];
+roto.addTarget('package', {
+	description: 'Generates signed *.zxp installer ready for distribution.'
+}, function(options) {
+	var folder_build   = './build/bin-release';
+	var folder_package = './package';
 
-				console.log(roto.colorize(options.output, 'white'));
-				console.log(roto.colorize('java ' + args.join(' '), 'magenta'));
+	// load project configuration to `config` global
+	roto.addTask('csxs.config_load');
 
-				var ucf = spawn('java', args);
-				ucf.stdout.on('data', function (data) { console.log(data); });
-				ucf.stderr.on('data', function (data) { console.error(data); });
-				ucf.on('exit', function(code) {
-					return callback();
-				});
-			});
-		};
-
-		roto.addTask('dir-remove', {path: folder_package});
-		roto.addTask(function(callback) {
-			fs.mkdir(folder_package, function() { callback(); });
-		});
-
-		// package extension (cs5)
-		roto.addTask('target:compile', {'debug': false, 'cs-version': 5});
-		build_zxp({
-			'input'  : folder_build,
-			'output' : folder_package + '/CS5.zxp'
-		});
-
-		// package extension (cs6)
-		roto.addTask('target:compile', {'debug': false, 'cs-version': 6});
-		build_zxp({
-			'input'  : folder_build,
-			'output' : folder_package + '/CS6.zxp'
-		});
-
-		// package hybrid extension
-		roto.addTask(function(callback) {
-			copySync('assets/icon-ext.png', folder_package + '/icon.png', 'binary');
-			copySync('ID.mxi', folder_package + '/ID.mxi', 'utf8');
-			callback();
-		});
-
-		build_zxp({
-			'input'  : folder_package,
-			'output' : 'ID.' + config.version + '.zxp'
-		});
-
-		roto.addTask(function(callback) {
-			copySync('ID.' + config.version + '.zxp', 'ID.zxp', 'binary');
-			callback();
-		});
-
+	// create temporary "package" directory
+	roto.addTask('dir-remove', {path: folder_package});
+	roto.addTask(function(callback) {
+		fs.mkdir(folder_package, function() { callback(); });
 	});
-};
+
+	// package extension (cs5)
+	roto.addTask('target:compile', {'debug': false, 'cs-version': 5});
+	roto.addTask('csxs.ucf', function() {
+		return {
+			input    : folder_build,
+			output   : folder_package + '/CS5.zxp',
+			keystore : config.certificate.location,
+			password : config.certificate.password
+		}
+	});
+
+	// package extension (cs6)
+	roto.addTask('target:compile', {'debug': false, 'cs-version': 6});
+	roto.addTask('csxs.ucf', function() {
+		return {
+			input    : folder_build,
+			output   : folder_package + '/CS6.zxp',
+			keystore : config.certificate.location,
+			password : config.certificate.password
+		}
+	});
+
+	// package hybrid extension
+	roto.addTask('csxs.fs_copy', {from: 'assets/icon-mxi.png', to: folder_package + '/icon.png'});
+	roto.addTask('csxs.fs_copy', function() {
+		return {
+			from     : config.basename + '.mxi',
+			to       : folder_package + '/' + config.basename + '.mxi'
+		};
+	});
+	roto.addTask('csxs.ucf', function() {
+		return {
+			input    : folder_package,
+			output   : 'ID.' + config.version + '.zxp',
+			keystore : config.certificate.location,
+			password : config.certificate.password
+		}
+	});
+	roto.addTask('csxs.fs_copy', function() {
+		return {
+			from     : 'ID.' + config.version + '.zxp',
+			to       : 'ID.zxp'
+		};
+	});
+
+});

@@ -13,10 +13,10 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-var fs     = require('fs');
-var path   = require('path');
-var spawn  = require('child_process').spawn;
-var exec   = require('child_process').exec;
+var fs      = require('fs');
+var path    = require('path');
+var spawn   = require('child_process').spawn;
+var project = require('../lib/project.js');
 
 module.exports = function(roto) {
 	roto.addTarget('changelogs', {
@@ -25,11 +25,11 @@ module.exports = function(roto) {
 		var files;
 
 		roto.addTask(function(callback) {
-			files = getChangelogs();
+			files = project.getChangelogs();
 			callback();
 		});
 
-		// changelogs/master.txt
+		// generate changelogs/master.txt
 		roto.addTask(function(callback) {
 			var ver, txt = '';
 			for (var i = 0, n = files.length; i < n; i++) {
@@ -39,12 +39,12 @@ module.exports = function(roto) {
 				txt += '\n\n';
 			}
 			txt = txt.replace(/\s+$/, '') + '\n';
-			roto.writeFile('changelogs/master.txt', txt, 'utf8');
-			console.log('changelogs/master.txt written.');
+			roto.writeFile('changes/master.txt', txt, 'utf8');
+			console.log('changes/master.txt written.');
 			callback();
 		});
 
-		// HISTORY.md
+		// generate HISTORY.md
 		roto.addTask(function(callback) {
 			var ver, txt;
 			var rows = [];

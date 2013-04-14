@@ -1,4 +1,4 @@
-# {{title}}
+# {{name}}
 
 ### Requirements
 
@@ -11,7 +11,7 @@ for development.
   * Set the SDK path: `export CSSDK=[location]`
   * [Build and Install Node.js](https://github.com/joyent/node/wiki/Installation)
   * Install [NPM](http://npmjs.org/): `curl http://npmjs.org/install.sh | sh`
-  * Install [csxs](https://github.com/diy/roto): `npm install -g csxs`
+  * Install [csxs](https://github.com/creativemarket/csxs): `npm install -g csxs`
 
 ## Footnotes
 
