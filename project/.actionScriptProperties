@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<actionScriptProperties analytics="false" mainApplicationPath="{{id}}.mxml" projectUUID="{{uuid}}" version="10">
+	<compiler additionalCompilerArguments="-locale en_US -define=CONFIG::debug,true -define=CONFIG::release,false -define=CONFIG::version,&quot;'0.0.0'&quot;" autoRSLOrdering="false" copyDependentFiles="false" flexSDK="Extension Builder 3.4" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="false" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="false" includeNetmonSwc="false" outputFolderPath="build/bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="false" verifyDigests="true" warn="true">
+		<compilerSourcePath>
+			<compilerSourcePathEntry kind="1" linkType="1" path="src"/>
+		</compilerSourcePath>
+		<libraryPath defaultLinkType="1">
+			<libraryPathEntry kind="4" path=""/>
+			<libraryPathEntry kind="3" linkType="2" path="${CSLIBS}/1.0/3.4/release/apedelta.swc" useDefaultLinkType="false"/>
+			<libraryPathEntry kind="3" linkType="1" path="${CSAR}/release/ps_host_adapter.swc" useDefaultLinkType="false"/>
+			<libraryPathEntry kind="3" linkType="1" path="${CSLIBS}/1.0/3.4/release/csaw_photoshop.swc" useDefaultLinkType="false"/>
+			<libraryPathEntry kind="3" linkType="1" path="${CSAR}/release/CSXSLibrary-2.0-sdk-3.4-public.swc" useDefaultLinkType="false"/>
+			<libraryPathEntry kind="3" linkType="1" path="${CSAR}/release/MXThemeSync.swc" useDefaultLinkType="false"/>
+		</libraryPath>
+		<sourceAttachmentPath/>
+	</compiler>
+	<applications>
+		<application path="{{id}}.mxml"/>
+	</applications>
+	<modules/>
+	<buildCSSFiles/>
+	<flashCatalyst validateFlashCatalystCompatibility="false"/>
+</actionScriptProperties>

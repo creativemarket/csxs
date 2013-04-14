@@ -1,0 +1,5 @@
+<ExtensionUpdateInformation>
+	<version>{{version}}</version>
+	<download>{{url}}</download>
+	<description><![CDATA[{{{description}}}]]></description>
+</ExtensionUpdateInformation>

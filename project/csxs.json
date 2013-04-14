@@ -1,0 +1,71 @@
+{
+	"project": {
+		"uuid": "{{uuid}}",
+		"version": "1.0.0",
+		"id": "{{id}}",
+		"name": "{{name}}",
+		"author": "{{author}}",
+		"description": "",
+		"license-agreement": "",
+		"ui-access": "You can run this extension by choosing<br><b>Window &gt; Extensions &gt; {{name}}.</b>",
+		"cs-version": "6",
+		"flex-version": "3.4.0",
+		"update": "http://cse.creativemarket.com/releases/update.xml",
+		"certificate": {
+			"location": "certificate.p12",
+			"password": "password"
+		},
+		"icons": {
+			"light": {
+				"normal": "./assets/icon.png",
+				"hover": "./assets/icon-hover.png",
+				"disabled": "./assets/icon-disabled.png"
+			},
+			"dark": {
+				"normal": "./assets/icon-dark.png",
+				"hover": "./assets/icon-dark-hover.png",
+				"disabled": "./assets/icon-dark-disabled.png"
+			}
+		},
+		"size": {
+			"normal": {"width": 324, "height": 400},
+			"min": {"width": 324, "height": 300},
+			"max": {"width": 800, "height": 2400}
+		}
+	},
+	"s3": {
+		"key": "",
+		"secret": "",
+		"bucket": ""
+	},
+	"flex": {
+		"4.5.0": [
+			"./libs/CSXSLibrary-3.0-sdk-4.5-public.swc",
+			"./CS Flex SDK 4.5.0/frameworks/libs/core.swc",
+			"./CS Flex SDK 4.5.0/frameworks/libs/framework.swc",
+			"./CS Flex SDK 4.5.0/frameworks/libs/rpc.swc",
+			"./CS Flex SDK 4.5.0/frameworks/libs/air/aircore.swc",
+			"./CS Flex SDK 4.5.0/frameworks/libs/air/airframework.swc",
+			"./CS Flex SDK 4.5.0/frameworks/libs/air/servicemonitor.swc",
+			"./CS Flex SDK 4.5.0/frameworks/libs/air/applicationupdater.swc",
+			"./CS Flex SDK 4.5.0/frameworks/libs/air/applicationupdater_ui.swc",
+			"./libs/cslibs/2.0/4.5/release/apedelta.swc",
+			"./libs/cslibs/2.0/4.5/release/csaw_photoshop.swc"
+		],
+		"3.4.0": [
+			"./libs/CSXSLibrary-2.0-sdk-3.4-public.swc",
+			"./CS Flex SDK 3.4.0/frameworks/libs/flex.swc",
+			"./CS Flex SDK 3.4.0/frameworks/libs/framework.swc",
+			"./CS Flex SDK 3.4.0/frameworks/libs/rpc.swc",
+			"./CS Flex SDK 3.4.0/frameworks/libs/utilities.swc",
+			"./CS Flex SDK 3.4.0/frameworks/libs/air/aircore.swc",
+			"./CS Flex SDK 3.4.0/frameworks/libs/air/airglobal.swc",
+			"./CS Flex SDK 3.4.0/frameworks/libs/air/airframework.swc",
+			"./CS Flex SDK 3.4.0/frameworks/libs/air/servicemonitor.swc",
+			"./CS Flex SDK 3.4.0/frameworks/libs/air/applicationupdater.swc",
+			"./CS Flex SDK 3.4.0/frameworks/libs/air/applicationupdater_ui.swc",
+			"./libs/cslibs/1.0/3.4/release/apedelta.swc",
+			"./libs/cslibs/1.0/3.4/release/csaw_photoshop.swc"
+		]
+	}
+}

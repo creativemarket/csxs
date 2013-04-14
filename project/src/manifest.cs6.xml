@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionManifest Version="3.0" ExtensionBundleId="{{id}}" ExtensionBundleVersion="{{version}}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Author><![CDATA[{{author}}]]></Author>
+	<ExtensionList>
+		<Extension Id="{{id}}" Version="{{version}}" />
+	</ExtensionList>
+	<ExecutionEnvironment>
+		<HostList>
+			<Host Name="PHXS" Version="[13.0,13.9]" />
+			<Host Name="PHSP" Version="[13.0,13.9]" />
+		</HostList>
+		<LocaleList>
+			<Locale Code="All" />
+		</LocaleList>
+		<RequiredRuntimeList>
+			<RequiredRuntime Name="CSXS" Version="2.0" />
+		</RequiredRuntimeList>
+	</ExecutionEnvironment>
+	<DispatchInfoList>
+		<Extension Id="{{id}}">
+			<DispatchInfo>
+				<Resources>
+					<SwfPath>./{{id}}.swf</SwfPath>
+					<ScriptPath>./{{id}}.jsx</ScriptPath>
+				</Resources>
+				<Lifecycle>
+					<AutoVisible>true</AutoVisible>
+				</Lifecycle>
+				<UI>
+					<Type>Panel</Type>
+					<Menu>{{name}}</Menu>
+					<Geometry>
+						<Size>
+							<Height>{{size.normal.height}}</Height>
+							<Width>{{size.normal.width}}</Width>
+						</Size>
+						<MaxSize>
+							<Height>{{size.max.height}}</Height>
+							<Width>{{size.max.width}}</Width>
+						</MaxSize>
+						<MinSize>
+							<Height>{{size.min.height}}</Height>
+							<Width>{{size.min.width}}</Width>
+						</MinSize>
+					</Geometry>
+					<Icons>
+						<Icon Type="Normal">{{icons.light.normal}}</Icon>
+						<Icon Type="RollOver">{{icons.light.hover}}</Icon>
+						<Icon Type="Disabled">{{icons.light.disabled}}</Icon>
+						<Icon Type="DarkNormal">{{icons.dark.normal}}</Icon>
+						<Icon Type="DarkRollOver">{{icons.dark.hover}}</Icon>
+					</Icons>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+	</DispatchInfoList>
+</ExtensionManifest>

@@ -1,0 +1,22 @@
+{
+	"name": "csxs",
+	"description": "A build tool for Adobe® Creative Suite® extensions. Create, compile, debug, package, and deploy to S3 with ease!",
+	"keywords": ["adobe","creative suite","extension","csxs","build"],
+	"version": "0.0.1",
+	"author": "Brian Reavis <brian@creativemarket.com>",
+	"bin": {"csxs": "./bin/csxs.js"},
+	"main": "./lib/csxs.js",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/creativemarket/csxs.git"
+	},
+	"preferGlobal": true,
+	"dependencies": {
+		"roto": "0.3.X",
+		"optimist": "0.3.X"
+	},
+	"devDependencies": {},
+	"engines": {
+		"node": "*"
+	}
+}

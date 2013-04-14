@@ -1,0 +1,14 @@
+.DS_Store
+.staged-extension
+*.swp
+Thumbs.db
+bin-release
+bin-debug
+.mxi
+/build/*
+/package
+/*.jsx
+/temp
+/*.mxi
+*.sublime-workspace
+*.zxp
