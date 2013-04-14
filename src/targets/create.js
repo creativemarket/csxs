@@ -13,7 +13,8 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-var fs = require('fs');
+var fs   = require('fs');
+var path = require('path');
 
 
 roto.addTarget('create', {
@@ -23,7 +24,10 @@ roto.addTarget('create', {
 	// check for empty working directory
 	roto.addTask(function(callback) {
 		var files = fs.readdirSync('.');
-		if (files && files.length) {
+		for (var i = 0, n = files.length; i < n; i++) {
+			if (path.basename(files[i]).charAt(0) === '.') {
+				continue;
+			}
 			console.error(roto.colorize('ERROR: ', 'red') + 'Working directory must be empty.');
 			return callback(false);
 		}
