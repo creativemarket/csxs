@@ -13,8 +13,12 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-var fs   = require('fs');
-var path = require('path');
+var _        = require('lodash');
+var fs       = require('fs');
+var async    = require('async');
+var path     = require('path');
+var optimist = require('optimist');
+var prompt   = require('../lib/prompt.js');
 
 
 roto.addTarget('create', {
@@ -32,6 +36,101 @@ roto.addTarget('create', {
 			return callback(false);
 		}
 		return callback();
+	});
+
+	// prompt user for project settings
+	var settings_schemas = [
+		{
+			key: 'name',
+			title: 'Project Name',
+			description: 'Example: "My Extension"',
+			pattern: /^[a-zA-Z0-9\s\-]+$/,
+			message: 'Can only contain letters, spaces, or dashes',
+			required: true
+		},
+		{
+			key: 'id',
+			title: 'Project Identifier (unique)',
+			description: 'Example: "MyExtension"',
+			pattern: /^[a-zA-Z][\.a-zA-Z]*$/,
+			message: 'Can only contain letters, numbers, and periods. Must start with a letter.',
+			required: true
+		}
+	];
+
+	var settings = {};
+	roto.addTask(function(callback) {
+		console.log('Please provide the following project properties.\n');
+		async.mapSeries(settings_schemas, prompt, function(err, results) {
+			for (var i = 0, n = results.length; i < n; i++) {
+				settings[settings_schemas[i].key] = results[i];
+			}
+			settings.basename = settings.id;
+			callback();
+		});
+	});
+
+	roto.addTask(function(callback) {
+		console.log('Generating project...');
+		callback();
+	});
+
+	// copy project template
+	roto.addTask('dir-copy', {
+		from: path.join(__dirname, '../../project'),
+		to: './'
+	});
+
+	// fill in templates
+	roto.addTask(function(callback) {
+		console.log('Populating templates...');
+		var files = roto.findFiles([
+			'csxs.json',
+			'README.md',
+			'src/*.xml',
+			'src/*.mxi'
+		]);
+
+		var queue = async.queue(function(file, callback) {
+			async.auto({
+				input: function(callback) {
+					fs.readFile(file, 'utf8', callback);
+				},
+				process: ['input', function(callback, obj) {
+					var content = obj.input;
+					for (var key in settings) {
+						if (settings.hasOwnProperty(key)) {
+							var regex = new RegExp('\\{\\{' + key.replace(/\-/g, '\\-') + '\\}\\}', 'g');
+							content = content.replace(regex, settings[key]);
+						}
+					}
+					callback(null, content);
+				}],
+				write: ['process', function(callback, obj) {
+					fs.writeFile(file, obj.process, 'utf8', callback);
+				}]
+			}, callback);
+		});
+
+		queue.drain = function(err) { callback(); };
+		queue.push(files);
+	});
+
+	// rename files
+	roto.addTask(function(callback) {
+		var files = roto.findFiles('**/ID.*');
+		for (var i = 0, n = files.length; i < n; i++) {
+			var dir = path.dirname(files[i]);
+			var ext = path.extname(files[i]);
+			fs.renameSync(files[i], path.join(dir, settings.id + ext));
+		}
+		callback();
+	});
+
+	// finished
+	roto.addTask(function(callback) {
+		console.log(roto.colorize('Project created.', 'green'));
+		callback();
 	});
 
 });

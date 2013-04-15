@@ -12,6 +12,7 @@
 	},
 	"preferGlobal": true,
 	"dependencies": {
+		"async": "0.2.X",
 		"roto": "0.3.X",
 		"lodash": "1.1.X",
 		"optimist": "0.3.X"
