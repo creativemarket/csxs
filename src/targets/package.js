@@ -67,15 +67,15 @@ roto.addTarget('package', {
 	roto.addTask('csxs.ucf', function() {
 		return {
 			input    : folder_package,
-			output   : 'ID.' + config.version + '.zxp',
+			output   : config.basename + '.' + config.version + '.zxp',
 			keystore : config.certificate.location,
 			password : config.certificate.password
 		}
 	});
 	roto.addTask('csxs.fs_copy', function() {
 		return {
-			from     : 'ID.' + config.version + '.zxp',
-			to       : 'ID.zxp'
+			from     : config.basename + '.' + config.version + '.zxp',
+			to       : config.basename + '.zxp'
 		};
 	});
 

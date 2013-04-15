@@ -12,18 +12,15 @@
 		<![CDATA[
 
 			import com.adobe.csxs.core.CSXSInterface;
-			import com.adobe.csxs.events.AppReskinEvent;
-			import com.adobe.csxs.events.CSXSEvent;
-			import com.adobe.csxs.events.MenuClickEvent;
-			import com.adobe.csxs.events.StateChangeEvent;
+			import com.adobe.csxs.events.*;
 			import com.adobe.csxs.types.*;
-			import com.adobe.serialization.json.JSON;
 			import flash.utils.setTimeout;
+			import mx.events.FlexEvent;
 
 			// properties
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-			var csxs:CSXSInterface;
+			protected var csxs:CSXSInterface;
 
 			// methods
 			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -35,7 +32,7 @@
 			 */
 			protected function reskin(skin:AppSkinInfo):void {
 				var background:RGBColor = skin.panelBackgroundColor.color as RGBColor;
-				var background_hex = uint(background.red) << 16) | (uint(background.green) << 8) | uint(background.blue);
+				var background_hex:uint = (uint(background.red) << 16) | (uint(background.green) << 8) | uint(background.blue);
 				setStyle('backgroundColor', background_hex);
 			}
 

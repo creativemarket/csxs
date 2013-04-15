@@ -36,7 +36,7 @@ roto.addTarget('compile', {
 	// find all *.mxml files
 	paths_mxml = roto.findFiles(folder_src + '/*.mxml');
 	if (!paths_mxml || !paths_mxml.length) {
-		console.error(roto.colorize('ERROR: ', 'red') + ' No *.mxml files found in "src".');
+		console.error(roto.colorize('ERROR: ', 'red') + 'No *.mxml files found in "src".');
 		return false;
 	}
 

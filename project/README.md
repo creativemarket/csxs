@@ -17,7 +17,7 @@ for development.
 
 ```sh
 # compiles, installs, and puts photoshop into debug mode:
-$ roto debug
+$ csxs debug
 ```
 
 ### Available Options
@@ -58,6 +58,7 @@ so don't be too technical). When that's all set, run `csxs changelogs` to update
 aggregated changelogs, commit your changes, and run:
 
 ```sh
+# compiles, packages, and deploys to S3:
 $ csxs release
 ```
 

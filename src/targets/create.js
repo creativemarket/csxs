@@ -86,6 +86,7 @@ roto.addTarget('create', {
 			}
 			settings.basename = settings.id;
 			settings.uuid = uuid();
+			settings.year = (new Date).getFullYear();
 			console.log(roto.colorize(hr, 'gray'));
 			callback();
 		});
@@ -107,7 +108,9 @@ roto.addTarget('create', {
 		console.log('Populating templates...');
 		var files = roto.findFiles([
 			'csxs.json',
-			'README.md'
+			'README.md',
+			'src/ID.jsx',
+			'.actionScriptProperties'
 		]);
 
 		var queue = async.queue(function(file, callback) {
