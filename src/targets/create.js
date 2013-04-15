@@ -19,7 +19,7 @@ var async    = require('async');
 var path     = require('path');
 var optimist = require('optimist');
 var prompt   = require('../lib/prompt.js');
-
+var uuid     = require('../lib/uuid.js');
 
 roto.addTarget('create', {
 	description: 'Creates a new Creative Suite project in the current directory.'
@@ -55,17 +55,38 @@ roto.addTarget('create', {
 			pattern: /^[a-zA-Z][\.a-zA-Z]*$/,
 			message: 'Can only contain letters, numbers, and periods. Must start with a letter.',
 			required: true
-		}
+		},
+		{
+			key: 'author',
+			title: 'Author Name',
+			description: 'Example: "Nikola Tesla"',
+			pattern: /^[a-zA-Z0-9\s]+$/,
+			message: 'Can only contain letters, numbers, and spaces.',
+			required: true
+		},
 	];
 
 	var settings = {};
 	roto.addTask(function(callback) {
+		var i = 0;
+		var hr = '--------------------------------------------';
+		console.log(roto.colorize(hr, 'gray') + '');
 		console.log('Please provide the following project properties.\n');
-		async.mapSeries(settings_schemas, prompt, function(err, results) {
+
+		async.mapSeries(settings_schemas, function(schema, callback) {
+			prompt(schema, function(err, value) {
+				if (++i < settings_schemas.length) {
+					console.log('');
+				}
+				callback(err, value);
+			});
+		}, function(err, results) {
 			for (var i = 0, n = results.length; i < n; i++) {
 				settings[settings_schemas[i].key] = results[i];
 			}
 			settings.basename = settings.id;
+			settings.uuid = uuid();
+			console.log(roto.colorize(hr, 'gray'));
 			callback();
 		});
 	});
@@ -86,9 +107,7 @@ roto.addTarget('create', {
 		console.log('Populating templates...');
 		var files = roto.findFiles([
 			'csxs.json',
-			'README.md',
-			'src/*.xml',
-			'src/*.mxi'
+			'README.md'
 		]);
 
 		var queue = async.queue(function(file, callback) {

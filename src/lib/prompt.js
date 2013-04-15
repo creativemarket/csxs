@@ -34,7 +34,6 @@ var prompt = module.exports = function(schema, callback) {
 				return input();
 			}
 
-			console.log('');
 			callback(null, value);
 		});
 	};

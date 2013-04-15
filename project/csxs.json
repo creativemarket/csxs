@@ -1,6 +1,6 @@
 {
 	"uuid": "{{uuid}}",
-	"version": "1.0.0",
+	"version": "0.0.1",
 	"id": "{{id}}",
 	"name": "{{name}}",
 	"author": "{{author}}",
@@ -9,7 +9,6 @@
 	"ui-access": "You can run this extension by choosing<br><b>Window &gt; Extensions &gt; {{name}}.</b>",
 	"cs-version": "6",
 	"flex-version": "3.4.0",
-	"update": "http://s3.amazonaws.com/{{s3-bucket}}/releases/update.xml",
 	"properties": {},
 	"certificate": {
 		"location": "certificate.p12",
@@ -31,11 +30,6 @@
 		"normal": {"width": 324, "height": 400},
 		"min": {"width": 324, "height": 300},
 		"max": {"width": 800, "height": 2400}
-	},
-	"s3": {
-		"key": "",
-		"secret": "",
-		"bucket": ""
 	},
 	"flex": {
 		"4.5.0": [
