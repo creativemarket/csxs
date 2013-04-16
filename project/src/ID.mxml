@@ -34,6 +34,7 @@
 				var background:RGBColor = skin.panelBackgroundColor.color as RGBColor;
 				var background_hex:uint = (uint(background.red) << 16) | (uint(background.green) << 8) | uint(background.blue);
 				setStyle('backgroundColor', background_hex);
+				wrapper.setStyle('backgroundColor', background_hex);
 			}
 
 			// event handlers
@@ -94,4 +95,5 @@
 
 		]]>
 	</mx:Script>
+	<mx:Canvas x="0" y="0" width="100%" height="100%" id="wrapper" backgroundColor="#DFDFDF"></mx:Canvas>
 </mx:Application>
