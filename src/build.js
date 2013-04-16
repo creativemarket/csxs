@@ -27,11 +27,13 @@ module.exports = function(roto) {
 	require('./tasks/fs.js');
 	require('./tasks/ucf.js');
 	require('./tasks/amxmlc.js');
+	require('./tasks/fdb.js');
 
 	require('./targets/changelogs.js');
 	require('./targets/create.js');
 	require('./targets/compile.js');
 	require('./targets/configure.js');
+	require('./targets/debug.js');
 	require('./targets/package.js');
 	require('./targets/release.js');
 };

@@ -17,7 +17,6 @@ var spawn = require('child_process').spawn;
 var git   = require('../lib/git.js');
 
 
-
 roto.defineTask('csxs.git_tag', function(callback, options) {
 	git.status(function(status) {
 		if (!status) return callback();
