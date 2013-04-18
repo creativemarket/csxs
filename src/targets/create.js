@@ -21,6 +21,7 @@ var optimist = require('optimist');
 var prompt   = require('../lib/prompt.js');
 var uuid     = require('../lib/uuid.js');
 
+
 roto.addTarget('create', {
 	description: 'Creates a new Creative Suite project in the current directory.'
 }, function(options) {

@@ -105,8 +105,8 @@ roto.addTarget('compile', {
 	roto.addTask('csxs.fs_copy', function(callback) {
 		console.log('Copying *.jsx scripts... ');
 		return {
-			from        : folder_src + '/' + config.basename + '.jsx',
-			to          : folder_build + '/' + config.basename + '.jsx'
+			from : folder_src + '/' + config.basename + '.jsx',
+			to   : folder_build + '/' + config.basename + '.jsx'
 		};
 	});
 
