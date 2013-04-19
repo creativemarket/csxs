@@ -1,5 +1,18 @@
 <img src="http://static.creativemarket.com/images/github/logos/csxs@2x.png" width="215" height="123">
 
+What is this? A command line tool written in [node.js](http://nodejs.org/) for compiling, packaging,
+debugging, and deploying extensions for Adobe&reg; Creative Suite&reg;. It's easy as to use and as it is powerful.
+
+It is designed to solve workflow problems and constraints that come from using [Flash Builder](http://www.adobe.com/devnet/flash-builder.html).
+As an added bonus, projects created with this tool contain boilerplate to resolve strange platform bugs we've encountered.
+
+### Advantages
+
+  * Use any editor you want!
+  * All project settings live in a single JSON file ([documentation](docs/configuration.md)).
+  * Automated signing, deploys to S3, changelog management, git tagging, etc.
+  * Open source!
+
 ### Requirements
 
   * [Build and Install Node.js](https://github.com/joyent/node/wiki/Installation)
@@ -73,9 +86,8 @@ The following [conditional compilation](http://livedocs.adobe.com/flex/3/html/he
 
 #### Adding Custom Variables
 
-Custom variables can be set by adding them to the "properties" object in "csxs.json"
-([guide](docs/configuration.md#properties)). The values *must* be scalar. The one exception to
-this is if you want different values for debug builds and release builds. In this case, provide an
+Custom variables can be set by adding them to the "properties" object in "csxs.json". The values *must* be scalar.
+The one exception to this is if you want different values for debug builds and release builds. In this case, provide an
 object with two properties: "debug" and "release".
 
 ```json
@@ -97,7 +109,7 @@ the "src/" folder can be safely edited. Template variables should adhere to [han
 
 ### Automated S3 Deployment
 
-Automated deployment of releases can be done with the "publish" target. The build tool will compile a release build,
+Automated deployment of releases are done with the "publish" target. The build tool will compile a release build,
 package it as a *.zxp installer, and place it on [S3](http://aws.amazon.com/s3/) (along with a history of changes).
 All that's needed is an S3 account. See the [documentation on the `"s3"` property](docs/configuration.md#s3) to see how to
 add S3 configuration.
@@ -142,7 +154,9 @@ $ git push origin --tags
 
 ## Footnotes
 
-* If your project needs host adapters, they have to be extracted manually from Extension Builder (see [Adobe Forums thread](http://forums.adobe.com/message/5245782)).
+* Right now the "create" and "debug" targets only support Photoshop. Additional products from the Creative Suite family will be added in the near future.
+* If your project needs host adapters, they have to be extracted manually from Extension Builder ([Adobe Forums thread](http://forums.adobe.com/message/5245782)).
+* 100% compatible with Mac OSX. Windows support is partial/spotty right now.
 
 ## License
 
