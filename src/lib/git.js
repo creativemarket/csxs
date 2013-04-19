@@ -26,24 +26,22 @@ var git = module.exports = {};
  * @param {function} callback
  */
 git.status = function(callback) {
-	var result = {clean: false, branch : null};
+	var result = null;
 
 	var proc = spawn('git', ['status']);
 	proc.stdout.on('data', function(data) {
-		var str = data.toString();
-		if (str.indexOf('Not a git repository')) {
-			result = null;
-		}
+		result = result || {
+			clean: false,
+			branch : null
+		};
 
-		if (result) {
-			// parse branch information
-			var branch = str.match(/On branch ([^\n]+)/);
-			result.branch = branch && branch[1].replace(/^\s+|\s+$/, '');
+		// parse branch information
+		var branch = str.match(/On branch ([^\n]+)/);
+		result.branch = branch && branch[1].replace(/^\s+|\s+$/, '');
 
-			// parse working directory status
-			if (str.indexOf('working directory clean') !== -1) {
-				result.clean = true;
-			}
+		// parse working directory status
+		if (str.indexOf('working directory clean') !== -1) {
+			result.clean = true;
 		}
 	});
 

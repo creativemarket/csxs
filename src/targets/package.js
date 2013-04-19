@@ -28,6 +28,25 @@ roto.addTarget('package', {
 	// load project configuration to `config` global
 	roto.addTask('csxs.config_load');
 
+	// certificate settings
+	roto.addTask(function(callback) {
+		if (!config.certificate) {
+			config.certificate = {
+				location: '.certificate-self.p12',
+				password: 'password'
+			};
+			if (!fs.existsSync(config.certificate.location)) {
+				return roto.executeTask('target:certificate', {
+					password : config.certificate.password,
+					output   : config.certificate.location
+				}, callback);
+			} else {
+				callback();
+			}
+		}
+		callback();
+	});
+
 	// create temporary "package" directory
 	roto.addTask('dir-remove', {path: folder_package});
 	roto.addTask(function(callback) {

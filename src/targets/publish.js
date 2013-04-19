@@ -13,16 +13,17 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-var fs     = require('fs');
-var path   = require('path');
-var spawn  = require('child_process').spawn;
-var exec   = require('child_process').exec;
-var http   = require('http');
-var git    = require('../lib/git.js');
+var fs      = require('fs');
+var path    = require('path');
+var spawn   = require('child_process').spawn;
+var exec    = require('child_process').exec;
+var http    = require('http');
+var git     = require('../lib/git.js');
+var project = require('../lib/project.js');
 
 
-roto.addTarget('release', {
-	description: 'Builds, signs, and uploads the *.zxp installer.'
+roto.addTarget('publish', {
+	description: 'Builds, signs, and uploads the *.zxp installer to S3.'
 }, function(options) {
 
 	var changes;
@@ -30,19 +31,41 @@ roto.addTarget('release', {
 	var file_zxp_versioned;
 	var file_zxp;
 	var url_zxp;
+	var path_s3;
 	var path_changelog;
 
 	// load project configuration to `config` global
 	roto.addTask('csxs.config_load');
 
+	// validate settings
+	roto.addTask(function(callback) {
+		var err;
+		if (!config.s3) err = 'Amazon S3 not configured.';
+		else if (!config.s3.bucket) err = 'Amazon S3 bucket not provided.';
+		else if (!config.s3.key) err = 'Amazon S3 access key not provided.';
+		else if (!config.s3.secret) err = 'Amazon S3 access secret not provided.';
+
+		if (err) {
+			console.error(roto.colorize('ERROR: ', 'red') + err);
+			console.error('       ' + roto.colorize('https://github.com/creativemarket/csxs/blob/master/docs/configuration.md#s3', 'underline'));
+			return callback(false);
+		}
+
+		callback();
+	});
+
 	// deploy settings
 	roto.addTask(function(callback) {
 		file_zxp_versioned = config.basename + '.' + config.version + '.zxp';
 		file_zxp           = config.basename + '.zxp';
-		url_zxp            = 'http://' + config.s3.bucket + '/releases/' + file_zxp_versioned;
 		path_changelog     = 'changes/' + config.version + '.txt';
+		path_s3            = config.s3.path || '/';
 		changes            = '';
 
+		if (path_s3.charAt(path_s3.length - 1) !== '/') path_s3 += '/';
+		path_s3 = path_s3.replace(/^\/+/, '');
+
+		url_zxp = 'http://' + config.s3.bucket + '/' + path_s3 + file_zxp_versioned;
 		callback();
 	});
 
@@ -60,7 +83,7 @@ roto.addTarget('release', {
 	// build "update.xml" description (html)
 	roto.addTask(function(callback) {
 		var version;
-		var changelogs = getChangelogs();
+		var changelogs = project.getChangelogs();
 		changes_html = '<dl>';
 
 		for (var i = changelogs.length - 1, i0 = Math.max(0, i - 2); i >= i0; i--) {
@@ -69,6 +92,7 @@ roto.addTarget('release', {
 			changes_html += '<dd>' + fs.readFileSync(changelogs[i], 'utf8').replace(/\r?\n/g, '<br>') + '</dd>';
 		}
 		changes_html += '</dl>';
+		callback();
 	});
 
 	// generate new master changelog files
@@ -134,13 +158,15 @@ roto.addTarget('release', {
 	});
 
 	// sync to s3
-	roto.addTask('s3', {
-		key         : config.s3.key,
-		secret      : config.s3.secret,
-		bucket      : config.s3.bucket,
-		folder      : 'temp',
-		destination : 'releases',
-		ttl         : 0
+	roto.addTask('s3', function() {
+		return {
+			key         : config.s3.key,
+			secret      : config.s3.secret,
+			bucket      : config.s3.bucket,
+			folder      : 'temp',
+			destination : path_s3,
+			ttl         : 0
+		};
 	});
 
 	// create git tag

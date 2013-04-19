@@ -43,7 +43,7 @@ roto.defineTask('csxs.git_push_tags', function(callback) {
 
 roto.defineTask('csxs.git_is_clean', function(callback) {
 	git.status(function(status) {
-		if (status.clean) {
+		if (!status || status.clean) {
 			callback();
 		} else {
 			roto.error(roto.colorize('ERROR:', 'red') + ' You must commit modified files before issuing a public release.\n');

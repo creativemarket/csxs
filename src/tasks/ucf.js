@@ -14,12 +14,13 @@
  */
 
 var spawn = require('child_process').spawn;
+var path = require('path');
 
 
 roto.defineTask('csxs.ucf', function(callback, options) {
 	var args = [
 		'-jar',
-		'./tools/ucf.jar',
+		path.resolve(__dirname, '../../bin/ucf.jar'),
 		'-package',
 		'-storetype', 'PKCS12',
 		'-keystore', options.keystore,
