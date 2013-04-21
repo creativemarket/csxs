@@ -78,7 +78,7 @@ All project settings live in ["csxs.json"](project/csxs.json). The settings are 
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" id="s3"><code>"s3"</code></td>
+		<td valign="top"><a name="s3"></a><code>"s3"</code></td>
 		<td valign="top">
 			<a href="http://aws.amazon.com/s3/">Amazon S3</a> configuration for automated deploys via the "publish" target.
 			<table width="100%">
@@ -91,16 +91,16 @@ All project settings live in ["csxs.json"](project/csxs.json). The settings are 
 					<td>S3 bucket name.</td>
 				</tr>
 				<tr>
-					<td><code>"path"</code></td>
-					<td>The path to the folder within the bucket to place the files.</td>
-				</tr>
-				<tr>
 					<td><code>"key"</code></td>
 					<td>S3 account key.</td>
 				</tr>
 				<tr>
 					<td><code>"secret"</code></td>
 					<td>S3 account secret.</td>
+				</tr>
+				<tr>
+					<td><code>"path"</code></td>
+					<td>The path to the folder within the bucket to place the files.</td>
 				</tr>
 			</table>
 		</td>
@@ -136,11 +136,11 @@ All project settings live in ["csxs.json"](project/csxs.json). The settings are 
 				</tr>
 				<tr>
 					<td><code>"4.5.0"</code></td>
-					<td>An array of paths to libraries when compiling with the Flex 4 compiler.</td>
+					<td>An array of paths to libraries used when compiling with the Flex 4 compiler.</td>
 				</tr>
 				<tr>
 					<td><code>"3.4.0"</code></td>
-					<td>An array of paths to libraries when compiling with the Flex 3 compiler.</td>
+					<td>An array of paths to libraries used when compiling with the Flex 3 compiler.</td>
 				</tr>
 			</table>
 		</td>
