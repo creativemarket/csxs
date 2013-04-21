@@ -40,8 +40,6 @@ roto.addTarget('package', {
 					password : config.certificate.password,
 					output   : config.certificate.location
 				}, callback);
-			} else {
-				callback();
 			}
 		}
 		callback();
