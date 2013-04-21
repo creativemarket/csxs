@@ -93,5 +93,24 @@
 			"${CSSDK}/libs/cslibs/1.0/3.4/release/apedelta.swc",
 			"${CSSDK}/libs/cslibs/1.0/3.4/release/csaw_photoshop.swc"
 		]
-	}
+	},
+
+	// The "package" target prepares individualized builds and bundles
+	// them as a single *.zxp installer. This is useful for custom
+	// configuration by product. Each object in this list extends the
+	// main project configuration.
+	"builds": [
+		{
+			"manifest": "manifest.cs6.xml",
+			"flex-version": "3.4.0",
+			"cs-products": ["photoshop"],
+			"cs-versions": ["6.0"]
+		},
+		{
+			"manifest": "manifest.cs5.xml",
+			"flex-version": "3.4.0",
+			"cs-products": ["photoshop"],
+			"cs-versions": ["5.0", "5.5"]
+		}
+	]
 }

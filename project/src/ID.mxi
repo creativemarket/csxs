@@ -6,11 +6,10 @@
 	<license-agreement><![CDATA[{{{license-agreement}}}]]></license-agreement>
 	<ui-access><![CDATA[{{{ui-access}}}]]></ui-access>
 	<products>
-		<product familyname="Photoshop" maxversion="13.9" primary="true" version="12.0"/>
+		{{{list-products}}}
 	</products>
 	<files>
-		<file destination="" file-type="CSXS" products="Photoshop" maxVersion="13.9" minVersion="13.0" source="CS6.zxp"/>
-		<file destination="" file-type="CSXS" products="Photoshop" maxVersion="12.9" minVersion="12.0" source="CS5.zxp"/>
+		{{{list-files}}}
 		<file source="icon.png" destination="$ExtensionSpecificEMStore" />
 	</files>
 </macromedia-extension>

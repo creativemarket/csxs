@@ -47,14 +47,6 @@ roto.addTarget('configure', {
 	});
 
 	// generate configuration for flash builder
-	roto.addTask('template', function() {
-		return {
-			files  : 'src/' + config.basename + '.mxi',
-			output : './' + config.basename + '.mxi',
-			data   : config
-		};
-	});
-
 	roto.addTask('csxs.fs_symlink', function() {
 		return {
 			from: './src/' + config.basename + '.jsx',

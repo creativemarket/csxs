@@ -13,9 +13,11 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
+var _       = require('lodash');
 var fs      = require('fs');
 var path    = require('path');
 var spawn   = require('child_process').spawn;
+var hosts   = require('../lib/hosts.js');
 
 
 roto.addTarget('compile', {
@@ -24,7 +26,6 @@ roto.addTarget('compile', {
 
 	var profile = options.debug !== false ? 'debug' : 'release';
 	var ver_flex;
-	var ver_cs;
 	var folder_cssdk;
 	var folder_flex;
 	var folder_src = './src';
@@ -32,6 +33,7 @@ roto.addTarget('compile', {
 	var bin_amxmlc;
 	var paths_mxml;
 	var path_amxmlc;
+	var path_manifest;
 
 	// find all *.mxml files
 	paths_mxml = roto.findFiles(folder_src + '/*.mxml');
@@ -48,13 +50,22 @@ roto.addTarget('compile', {
 
 	// compilation settings
 	roto.addTask(function(callback) {
-		ver_flex     = options['flex-version'] || config['flex-version'];
-		ver_cs       = parseInt(options['cs-version'] || config['cs-version'] || 6, 10);
-		folder_cssdk = process.env.CSSDK;
-		folder_flex  = folder_cssdk + '/CS Flex SDK ' + ver_flex;
-		bin_amxmlc   = IS_WINDOWS ? 'amxmlc.exe' : 'amxmlc';
-		path_amxmlc  = path.normalize(folder_flex + '/bin/' + bin_amxmlc);
+		ver_flex      = options['flex-version'] || config['flex-version'];
+		folder_cssdk  = process.env.CSSDK;
+		folder_flex   = folder_cssdk + '/CS Flex SDK ' + ver_flex;
+		bin_amxmlc    = IS_WINDOWS ? 'amxmlc.exe' : 'amxmlc';
+		path_amxmlc   = path.normalize(folder_flex + '/bin/' + bin_amxmlc);
+		path_manifest = path.resolve('./src', options['manifest']);
 
+		callback();
+	});
+
+	// validate manifest
+	roto.addTask(function(callback) {
+		if (!fs.existsSync(path_manifest)) {
+			console.error(roto.colorize('ERROR: ', 'red') + 'Unable to read "' + path_manifest + '".');
+			return callback(false);
+		}
 		callback();
 	});
 
@@ -98,10 +109,24 @@ roto.addTarget('compile', {
 	roto.addTask('dir-remove', {path: folder_build});
 	roto.addTask('dir-copy', {from: './assets', to: folder_build + '/assets'});
 	roto.addTask('template', function() {
+		var i, j, n, range, host;
+		var list_hosts = [];
+		var config_products = options['cs-products'];
+		var config_versions = options['cs-versions'];
+		for (i = 0, n = config_products.length; i < n; i++) {
+			host  = hosts.getProduct(config_products[i]);
+			range = hosts.getVersionRange(config_products[i], config_versions);
+			for (j = 0; j < host.ids.length; j++) {
+				list_hosts.push('<Host Name="' + host.ids[j] + '" Version="[' + range.min + ',' + range.max + ']" />');
+			}
+		}
+
 		return {
-			files       : 'src/manifest.cs' + ver_cs + '.xml',
-			output      : folder_build + '/CSXS/manifest.xml',
-			data        : config
+			files  : path.relative(process.cwd(), path_manifest),
+			output : folder_build + '/CSXS/manifest.xml',
+			data   : _.extend({}, config, {
+				'list-hosts': list_hosts.join('\n\t\t\t')
+			})
 		};
 	});
 
