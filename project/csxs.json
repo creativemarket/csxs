@@ -9,10 +9,6 @@
 	"ui-access": "You can run this extension by choosing<br><b>Window &gt; Extensions &gt; {{name}}.</b>",
 	"flex-version": "3.4.0",
 	"properties": {},
-	"certificate": {
-		"location": "certificate.p12",
-		"password": "password"
-	},
 	"icons": {
 		"light": {
 			"normal": "./assets/icon.png",

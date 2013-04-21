@@ -3,9 +3,9 @@
 ### Requirements
 
 With the automated build system, [Flash Builder](http://www.adobe.com/products/flash-builder.html)
-and the [CS Extension Builder Plugin](http://www.adobe.com/devnet/creativesuite/cs-extension-builder.html) are not
-needed to compile, test, or package extensions. This means you can use Sublime Text or any other editor
-for development.
+and the [CS Extension Builder Plugin](http://www.adobe.com/devnet/creativesuite/cs-extension-builder.html)
+are not needed to compile, test, or package extensions. This means you can use Sublime Text or any other
+editor for development.
 
   * Download the [Creative Suite SDK](http://www.adobe.com/devnet/creativesuite.html)
   * Set the SDK path: `export CSSDK=[location]`
@@ -29,11 +29,11 @@ $ csxs debug
 	</tr>
 	<tr>
 		<td><code>--cs-version</code></td>
-		<td>The version of Photoshop to launch when debugging. If not provided, the newest version will be used.</td>
+		<td>The version of Creative Suite to launch when debugging. If not provided, the newest version will be used.</td>
 	</tr>
 	<tr>
 		<td><code>--flex-version</code></td>
-		<td>Overrides "flex-version" set in package.json.</td>
+		<td>Overrides "flex-version" set in csxs.json.</td>
 	</tr>
 	<tr>
 		<td><code>--fdb</code></td>
@@ -45,21 +45,21 @@ $ csxs debug
 	</tr>
 	<tr>
 		<td><code>--launch</code></td>
-		<td>When used with the "debug" target, this will cause a new instance of Photoshop to be launched.</td>
+		<td>When used with the "debug" target, this will cause a new instance of Creative Suite to be launched.</td>
 	</tr>
 </table>
 
 ## Public Releases
 
-First update ["package.json"](package.json) with a new version number.
-Next, create a changelog file in ["changelogs/"](changelogs/) that outlines
-what has changed since the previous version (this description is user-facing,
-so don't be too technical). When that's all set, run `csxs changelogs` to update
-aggregated changelogs, commit your changes, and run:
+First update ["csxs.json"](https://github.com/creativemarket/csxs/blob/master/docs/configuration.md)
+with a new version number. Next, create a changelog file in ["changes/"](changes/) that outlines
+what has changed since the previous version (this description is user-facing, so don't be too
+technical). When that's all set, run `csxs changelogs` to update aggregated changelogs, commit
+your changes, and run:
 
 ```sh
 # compiles, packages, and deploys to S3:
-$ csxs release
+$ csxs publish
 ```
 
 ## Footnotes
