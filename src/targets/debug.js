@@ -69,6 +69,7 @@ roto.addTarget('debug', {
 		}
 
 		// resolve paths
+		ver_selected       = String(ver_selected);
 		folder_home        = process.env[IS_WINDOWS ? 'USERPROFILE' : 'HOME'];
 		folder_photoshop   = versions[ver_selected];
 		folder_servicemgr  = IS_WINDOWS
@@ -97,17 +98,16 @@ roto.addTarget('debug', {
 
 	// enable debug mode + logging
 	roto.addTask(function(callback) {
+		var path_debug;
+		var path_mmcfg;
 
 		// enable photoshop debug mode
-		var path_debug = folder_photoshop + '/' + (IS_WINDOWS ? 'debug' : 'Adobe Photoshop CS' + ver_selected + '.app/Contents/debug');
+		path_debug = folder_photoshop + '/' + (IS_WINDOWS ? 'debug' : 'Adobe Photoshop CS' + ver_selected + '.app/Contents/debug');
 		console.log(roto.colorize('touch "' + path_debug, 'magenta') + '"');
 		fs.writeFileSync(path_debug, '', 'utf8');
 
 		// enable flash player logging
-		var path_mmcfg = IS_WINDOWS
-			? folder_home + '/mm.cfg'
-			: '/Library/Application Support/Macromedia/mm.cfg';
-
+		path_mmcfg = IS_WINDOWS ? folder_home + '/mm.cfg' : '/Library/Application Support/Macromedia/mm.cfg';
 		console.log('Creating "' + path_mmcfg + '"...');
 		fs.writeFileSync(path_mmcfg, [
 			'ErrorReportingEnable=1',
@@ -119,6 +119,27 @@ roto.addTarget('debug', {
 		roto.writeFile(path_log, '', 'utf8');
 
 		callback();
+	});
+
+	// set "PlayerDebugMode" flag in plist
+	roto.addTask(function(callback) {
+		var args, defaults;
+		var PLISTS = {
+			'5'   : folder_home + '/Library/Preferences/com.adobe.CSXS2Preferences.plist',
+			'5.5' : folder_home + '/Library/Preferences/com.adobe.CSXS.2.5.plist',
+			'6'   : folder_home + '/Library/Preferences/com.adobe.CSXS.3.plist'
+		};
+
+		if (!IS_MAC) return callback();
+		if (!PLISTS.hasOwnProperty(ver_selected)) return callback();
+
+		args = ['write', PLISTS[ver_selected], 'PlayerDebugMode', '1'];
+		console.log(roto.colorize('defaults ' + args.join(' '), 'magenta'));
+
+		defaults = spawn('defaults', args);
+		defaults.stdout.on('data', function (data) { process.stdout.write(data); });
+		defaults.stderr.on('data', function (data) { process.stderr.write(data); });
+		defaults.on('exit', function(code) { callback(); });
 	});
 
 	// launch photoshop
