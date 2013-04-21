@@ -68,7 +68,11 @@ roto.addTarget('compile', {
 
 		var libs = config.flex[ver_flex];
 		for (var i = 0, n = libs.length; i < n; i++) {
-			libs[i] = path.resolve(folder_cssdk, libs[i]);
+			libs[i] = libs[i].replace(/\$\{([a-zA-Z_]+)\}/g, function() {
+				var var_name  = arguments[1];
+				var var_value = process.env[var_name] || '';
+				return path.normalize(var_value).replace(/\/$/, '');
+			});
 			if (!fs.existsSync(libs[i])) {
 				console.error(roto.colorize('ERROR: ', 'red') + 'Unable to find "' + libs[i] + '"');
 				return callback(false);

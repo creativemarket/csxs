@@ -28,32 +28,32 @@
 	},
 	"flex": {
 		"4.5.0": [
-			"./libs/CSXSLibrary-3.0-sdk-4.5-public.swc",
-			"./CS Flex SDK 4.5.0/frameworks/libs/core.swc",
-			"./CS Flex SDK 4.5.0/frameworks/libs/framework.swc",
-			"./CS Flex SDK 4.5.0/frameworks/libs/rpc.swc",
-			"./CS Flex SDK 4.5.0/frameworks/libs/air/aircore.swc",
-			"./CS Flex SDK 4.5.0/frameworks/libs/air/airframework.swc",
-			"./CS Flex SDK 4.5.0/frameworks/libs/air/servicemonitor.swc",
-			"./CS Flex SDK 4.5.0/frameworks/libs/air/applicationupdater.swc",
-			"./CS Flex SDK 4.5.0/frameworks/libs/air/applicationupdater_ui.swc",
-			"./libs/cslibs/2.0/4.5/release/apedelta.swc",
-			"./libs/cslibs/2.0/4.5/release/csaw_photoshop.swc"
+			"${CSSDK}/libs/CSXSLibrary-3.0-sdk-4.5-public.swc",
+			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/core.swc",
+			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/framework.swc",
+			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/rpc.swc",
+			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/air/aircore.swc",
+			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/air/airframework.swc",
+			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/air/servicemonitor.swc",
+			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/air/applicationupdater.swc",
+			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/air/applicationupdater_ui.swc",
+			"${CSSDK}/libs/cslibs/2.0/4.5/release/apedelta.swc",
+			"${CSSDK}/libs/cslibs/2.0/4.5/release/csaw_photoshop.swc"
 		],
 		"3.4.0": [
-			"./libs/CSXSLibrary-2.0-sdk-3.4-public.swc",
-			"./CS Flex SDK 3.4.0/frameworks/libs/flex.swc",
-			"./CS Flex SDK 3.4.0/frameworks/libs/framework.swc",
-			"./CS Flex SDK 3.4.0/frameworks/libs/rpc.swc",
-			"./CS Flex SDK 3.4.0/frameworks/libs/utilities.swc",
-			"./CS Flex SDK 3.4.0/frameworks/libs/air/aircore.swc",
-			"./CS Flex SDK 3.4.0/frameworks/libs/air/airglobal.swc",
-			"./CS Flex SDK 3.4.0/frameworks/libs/air/airframework.swc",
-			"./CS Flex SDK 3.4.0/frameworks/libs/air/servicemonitor.swc",
-			"./CS Flex SDK 3.4.0/frameworks/libs/air/applicationupdater.swc",
-			"./CS Flex SDK 3.4.0/frameworks/libs/air/applicationupdater_ui.swc",
-			"./libs/cslibs/1.0/3.4/release/apedelta.swc",
-			"./libs/cslibs/1.0/3.4/release/csaw_photoshop.swc"
+			"${CSSDK}/libs/CSXSLibrary-2.0-sdk-3.4-public.swc",
+			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/flex.swc",
+			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/framework.swc",
+			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/rpc.swc",
+			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/utilities.swc",
+			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/air/aircore.swc",
+			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/air/airglobal.swc",
+			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/air/airframework.swc",
+			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/air/servicemonitor.swc",
+			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/air/applicationupdater.swc",
+			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/air/applicationupdater_ui.swc",
+			"${CSSDK}/libs/cslibs/1.0/3.4/release/apedelta.swc",
+			"${CSSDK}/libs/cslibs/1.0/3.4/release/csaw_photoshop.swc"
 		]
 	}
 }
