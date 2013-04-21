@@ -13,16 +13,18 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-var fs = require('fs');
+var fs     = require('fs');
+var jsmin  = require('jsmin').jsmin;
 
 
 roto.defineTask('csxs.config_load', function(callback){
 	var path = process.cwd() + '/csxs.json';
 
 	var read = function(callback) {
+		var data;
 		if (!fs.existsSync(path)) return callback('File not found.');
-		try { data = JSON.parse(fs.readFileSync(path, 'utf8')); }
-		catch (e) { return callback('Unable to parse JSON.'); }
+		try { data = JSON.parse(jsmin(fs.readFileSync(path, 'utf8'))); }
+		catch (e) { console.dir(e.toString()); return callback('Unable to parse JSON.'); }
 
 		data.basename = data.basename || data.id;
 		callback(null, data);
@@ -31,8 +33,7 @@ roto.defineTask('csxs.config_load', function(callback){
 	if (config) return callback();
 	read(function(err, data) {
 		if (err) {
-			console.error(roto.colorize('ERROR: ', 'red') + 'Unable to read "csxs.json" at project root.');
-			console.error('       ' + err);
+			console.error(roto.colorize('ERROR: ', 'red') + 'Unable to read "csxs.json" at project root (' + err + ').');
 			return callback(false);
 		}
 		config = data;

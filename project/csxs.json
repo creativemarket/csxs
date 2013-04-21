@@ -1,31 +1,69 @@
+/**
+ * "{{name}}" Configuration
+ *
+ * Copyright (C) {{year}} {{author}}
+ *
+ * These settings are synthesized to various XML and MXI files when the
+ * extension is compiled / packaged. For documention on all properties, see:
+ *
+ * https://github.com/creativemarket/csxs/blob/master/docs/configuration.md
+ */
+
 {
-	"uuid": "{{uuid}}",
+	// Extension version number (format: X.X.X)
 	"version": "0.0.1",
+
+	// Unique identifier for the extension (used by Creative Suite and Extension Manager)
 	"id": "{{id}}",
+
+	// Extension name to display in the panel's header and when installing the extension
 	"name": "{{name}}",
+
+	// Your name or your company's name
 	"author": "{{author}}",
+
+	// Globally unique identifier (only used by Flash Builder)
+	"uuid": "{{uuid}}",
+
+	// Description of the extension (HTML)
 	"description": "",
-	"license-agreement": "",
+
+	// Description of how to access the extension (HTML)
 	"ui-access": "You can run this extension by choosing<br><b>Window &gt; Extensions &gt; {{name}}.</b>",
-	"flex-version": "3.4.0",
-	"properties": {},
+
+	// License agreement shown when installing the extension (HTML)
+	"license-agreement": "",
+
+	// Icon to show when the panel is collapsed. Each icon should be a 23x23px PNG
 	"icons": {
 		"light": {
-			"normal": "./assets/icon.png",
-			"hover": "./assets/icon-hover.png",
-			"disabled": "./assets/icon-disabled.png"
+			"normal"   : "./assets/icon.png",
+			"hover"    : "./assets/icon-hover.png",
+			"disabled" : "./assets/icon-disabled.png"
 		},
 		"dark": {
-			"normal": "./assets/icon-dark.png",
-			"hover": "./assets/icon-dark-hover.png",
-			"disabled": "./assets/icon-dark-disabled.png"
+			"normal"   : "./assets/icon-dark.png",
+			"hover"    : "./assets/icon-dark-hover.png",
+			"disabled" : "./assets/icon-dark-disabled.png"
 		}
 	},
+
+	// Panel dimensions (in pixels)
 	"size": {
-		"normal": {"width": 324, "height": 400},
-		"min": {"width": 324, "height": 300},
-		"max": {"width": 800, "height": 2400}
+		"normal" : {"width": 324, "height": 400},
+		"min"    : {"width": 324, "height": 300},
+		"max"    : {"width": 800, "height": 2400}
 	},
+
+	// Custom conditional compilation variables to provide at compile time.
+	// See http://livedocs.adobe.com/flex/3/html/help.html?content=compilers_21.html
+	// for more information about how conditional compilation can be used.
+	"properties": {},
+
+	// Flex compiler version (must be a part of the Creative Suite SDK)
+	"flex-version": "3.4.0",
+
+	// A list of all libraries to link at compile time (by Flex version)
 	"flex": {
 		"4.5.0": [
 			"${CSSDK}/libs/CSXSLibrary-3.0-sdk-4.5-public.swc",
