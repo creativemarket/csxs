@@ -92,6 +92,7 @@ roto.addTarget('certificate', {
 		fs.unlinkSync('ca.crt');
 		fs.unlinkSync('ia.crt');
 		fs.unlinkSync('ia.csr');
+		fs.unlinkSync('ia.key');
 		console.log(options.output);
 		console.log(roto.colorize('Certificate generated.', 'green'));
 		callback();

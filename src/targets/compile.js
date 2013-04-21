@@ -49,7 +49,7 @@ roto.addTarget('compile', {
 	// compilation settings
 	roto.addTask(function(callback) {
 		ver_flex     = options['flex-version'] || config['flex-version'];
-		ver_cs       = parseInt(options['cs-version'] || config['cs-version'], 10);
+		ver_cs       = parseInt(options['cs-version'] || config['cs-version'] || 6, 10);
 		folder_cssdk = process.env.CSSDK;
 		folder_flex  = folder_cssdk + '/CS Flex SDK ' + ver_flex;
 		bin_amxmlc   = IS_WINDOWS ? 'amxmlc.exe' : 'amxmlc';

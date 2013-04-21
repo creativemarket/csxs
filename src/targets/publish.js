@@ -129,8 +129,12 @@ roto.addTarget('publish', {
 	// create staged files
 	roto.addTask('dir-remove', {path: 'temp'});
 	roto.addTask('dir-copy', {from: 'changes', to: 'temp/changes'});
-	roto.addTask('csxs.fs_copy', {from: file_zxp_versioned, to: 'temp/' + file_zxp});
-	roto.addTask('csxs.fs_copy', {from: file_zxp_versioned, to: 'temp/' + file_zxp_versioned});
+	roto.addTask('csxs.fs_copy', function() {
+		return {from: file_zxp_versioned, to: 'temp/' + file_zxp};
+	});
+	roto.addTask('csxs.fs_copy', function() {
+		return {from: file_zxp_versioned, to: 'temp/' + file_zxp_versioned};
+	});
 
 	// update.json
 	roto.addTask(function(callback) {
