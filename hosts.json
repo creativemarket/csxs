@@ -66,13 +66,13 @@
 			"familyname": "InDesign",
 			"name": "InDesign",
 			"ids": ["IDSN"],
-			"version": {"min": "7.1", "max": "7.9"}
+			"version": {"min": "7.5", "max": "7.9"}
 		},
 		"flash": {
 			"familyname": "Flash",
 			"name": "Flash",
 			"ids": ["FLPR"],
-			"version": {"min": "11.1", "max": "11.9"}
+			"version": {"min": "11.5", "max": "11.9"}
 		},
 		"fireworks": {
 			"familyname": "Fireworks",
@@ -84,13 +84,13 @@
 			"familyname": "Dreamweaver",
 			"name": "Dreamweaver",
 			"ids": ["DRWV"],
-			"version": {"min": "11.1", "max": "11.9"}
+			"version": {"min": "11.5", "max": "11.9"}
 		},
 		"premiere": {
 			"familyname": "Premiere",
 			"name": "Premiere Pro",
 			"ids": ["PPRO"],
-			"version": {"min": "5.1", "max": "5.9"}
+			"version": {"min": "5.5", "max": "5.9"}
 		}
 	},
 	"5.0": {
@@ -110,13 +110,13 @@
 			"familyname": "InDesign",
 			"name": "InDesign",
 			"ids": ["IDSN"],
-			"version": {"min": "7.0", "max": "7.0"}
+			"version": {"min": "7.0", "max": "7.4"}
 		},
 		"flash": {
 			"familyname": "Flash",
 			"name": "Flash",
 			"ids": ["FLPR"],
-			"version": {"min": "11.0", "max": "11.0"}
+			"version": {"min": "11.0", "max": "11.4"}
 		},
 		"fireworks": {
 			"familyname": "Fireworks",
@@ -128,13 +128,13 @@
 			"familyname": "Dreamweaver",
 			"name": "Dreamweaver",
 			"ids": ["DRWV"],
-			"version": {"min": "11.0", "max": "11.0"}
+			"version": {"min": "11.0", "max": "11.4"}
 		},
 		"premiere": {
 			"familyname": "Premiere",
 			"name": "Premiere Pro",
 			"ids": ["PPRO"],
-			"version": {"min": "5.0", "max": "5.0"}
+			"version": {"min": "5.0", "max": "5.4"}
 		}
 	}
 }
