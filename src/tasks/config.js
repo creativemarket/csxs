@@ -20,6 +20,11 @@ var jsmin  = require('jsmin').jsmin;
 roto.defineTask('csxs.config_load', function(callback){
 	var path = process.cwd() + '/csxs.json';
 
+	/**
+	 * Reads and parses "csxs.json".
+	 *
+	 * @param {function} callback
+	 */
 	var read = function(callback) {
 		var data;
 		if (!fs.existsSync(path)) return callback('File not found.');
@@ -30,10 +35,32 @@ roto.defineTask('csxs.config_load', function(callback){
 		callback(null, data);
 	};
 
+	/**
+	 * Validates configuration.
+	 *
+	 * @param {function} callback
+	 */
+	var validate = function(data) {
+		if (!data) return 'Configuration empty (csxs.json).';
+
+		// TODO: validate via json schema
+		var required = ['version','id','name','author','icons','size','flex-version','flex','builds'];
+		for (var i = 0, n = required.length; i < n; i++) {
+			if (!data.hasOwnProperty(required[i])) {
+				return 'No "' + required[i] + '" property found in csxs.json.';
+			}
+		}
+	};
+
 	if (config) return callback();
 	read(function(err, data) {
 		if (err) {
 			console.error(roto.colorize('ERROR: ', 'red') + 'Unable to read "csxs.json" at project root (' + err + ').');
+			return callback(false);
+		}
+		err = validate(data);
+		if (err) {
+			console.error(roto.colorize('ERROR: ', 'red') + err);
 			return callback(false);
 		}
 		config = data;
