@@ -59,8 +59,8 @@ roto.addTarget('certificate', {
 
 	// subject info
 	roto.addTask(function(callback) {
-		subject_ca = '/CN=' + config.author + '/O=' + config.author + '/C=US';
-		subject_ia = '/CN=' + config.author + ' Code Signing/O=' + config.author + '/C=US';
+		subject_ca = '/CN=' + config.author + ' Code Signing/O=' + config.author + '/C=US';
+		subject_ia = '/CN=' + config.author + '/O=' + config.author + '/C=US';
 		callback();
 	});
 
