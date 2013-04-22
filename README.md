@@ -155,7 +155,6 @@ $ git push origin --tags
 ## Footnotes
 
 * 100% compatible with Mac OSX. Windows support is partial / spotty right now.
-* Right now the "create" and "debug" targets only support Photoshop. Additional products from the Creative Suite family will be added in the near future.
 * If your project needs host adapters, they have to be extracted manually from Extension Builder ([Adobe Forums thread](http://forums.adobe.com/message/5245782)).
 
 ## License

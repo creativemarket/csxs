@@ -26,6 +26,7 @@ var hosts = module.exports = {};
 hosts.getProduct = function(key, cs_version) {
 	key = key.toLowerCase();
 	if (!cs_version) cs_version = '6.0';
+	else cs_version = parseFloat(cs_version).toFixed(1);
 	if (!HOSTS.hasOwnProperty(cs_version)) throw new Error('Unknown CS Version "' + cs_version + '"');
 	if (!HOSTS[cs_version].hasOwnProperty(key)) throw new Error('Unknown CS Product "' + key + '" (CS' + cs_version + ')');
 	return HOSTS[cs_version][key];
