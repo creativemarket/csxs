@@ -21,7 +21,7 @@ var hosts   = require('../lib/hosts.js');
 
 
 roto.addTarget('compile', {
-	description: 'Compiles SWF, ready for packaging / testing.',
+	description: 'Compiles SWF, ready for packaging / testing.', hidden: true
 }, function(options) {
 
 	var profile = options.debug !== false ? 'debug' : 'release';

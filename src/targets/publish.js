@@ -23,7 +23,7 @@ var project = require('../lib/project.js');
 
 
 roto.addTarget('publish', {
-	description: 'Builds, signs, and uploads the *.zxp installer to S3.'
+	description: 'Builds, signs, and uploads a *.zxp installer + update info to S3.'
 }, function(options) {
 
 	var changes;

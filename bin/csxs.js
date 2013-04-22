@@ -53,6 +53,7 @@ for (i = 1; i < argv._.length; i++) {
 
 if (options['help']) {
 	var print_target = function(name, options) {
+		if (options && options.hidden) return;
 		var selected = name === roto.defaultTarget;
 		var bullet   = selected ? '■' : '□';
 		process.stdout.write(colorize(' ' + bullet, 'gray') + ' ' + name);
@@ -67,9 +68,8 @@ if (options['help']) {
 
 	process.stdout.write('\n' + optimist.help());
 
-	// defined targets + 'all'
+	// defined targets
 	process.stdout.write(colorize('Available Targets:\n', 'white'));
-	print_target('all');
 	for (var key in roto._project.targets) {
 		if (roto._project.targets.hasOwnProperty(key)) {
 			print_target(key, roto._project.targets[key].options);

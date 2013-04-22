@@ -62,7 +62,7 @@ All project settings live in ["csxs.json"](project/csxs.json). The settings are 
 		<td valign="top">An object containing custom conditional compilation variables. Note: values must be scalar.</td>
 	</tr>
 	<tr>
-		<td valign="top"><code>"certificate"</code></td>
+		<td valign="top"><a name="certificate"></a><code>"certificate"</code></td>
 		<td valign="top">
 			Code signing certificate settings. For more information on code signing, see <a href="http://cssdk.host.adobe.com/sdk/1.5/docs/WebHelp/programmers_guide/Deploy.htm">"Packaging and Signing an Extension for Distribution"</a>.
 			<table width="100%">

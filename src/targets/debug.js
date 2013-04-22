@@ -20,7 +20,7 @@ var exec   = require('child_process').exec;
 
 
 roto.addTarget('debug', {
-	description: 'Puts PS into debug mode, installs the extension, and starts FDB.'
+	description: 'Puts CS into debug mode, installs the extension, and starts logging.'
 }, function(options) {
 	var ver;
 	var ver_max;
