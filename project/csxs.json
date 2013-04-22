@@ -60,6 +60,9 @@
 	// for more information about how conditional compilation can be used.
 	"properties": {},
 
+	// Custom compiler arguments
+	"compiler-arguments": [],
+
 	// Flex compiler version (must be a part of the Creative Suite SDK)
 	"flex-version": "3.4.0",
 

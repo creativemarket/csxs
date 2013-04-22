@@ -53,8 +53,12 @@ All project settings live in ["csxs.json"](project/csxs.json). The settings are 
 		<td valign="top"><code>"flex-version"</code></td>
 		<td valign="top">Flex version to compile against. This can be overridden by the <code>--flex-version</code> flag.</td>
 	</tr>
-	<tr id="properties">
-		<td valign="top"><code>"properties"</code></td>
+	<tr>
+		<td valign="top"><code>"compiler-arguments"</code></td>
+		<td valign="top">An array of additional arguments to provide the Flex compiler.</td>
+	</tr>
+	<tr>
+		<td valign="top"><a name="properties"></a><code>"properties"</code></td>
 		<td valign="top">An object containing custom conditional compilation variables. Note: values must be scalar.</td>
 	</tr>
 	<tr>

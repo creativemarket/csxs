@@ -61,6 +61,14 @@ roto.defineTask('csxs.amxmlc', function(callback, options) {
 		'version' : config.version
 	}, config.properties);
 
+	// custom flags
+	var custom_args = config['compiler-arguments'];
+	if (Array.isArray(custom_args)) {
+		for (var i = 0, n = custom_args.length; i < n; i++) {
+			args.push(custom_args[i]);
+		}
+	}
+
 	// user defined constants
 	var key, value;
 	for (key in properties) {
