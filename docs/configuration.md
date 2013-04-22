@@ -2,13 +2,13 @@
 
 ### csxs.json
 
-All project settings live in ["csxs.json"](project/csxs.json). The settings are synthesized to the following files at build-time:
+All project settings live in ["csxs.json"](../project/csxs.json). The settings are synthesized to the following files at build-time:
 
-- ".actionScriptProperties"
-- ["src/manifest.cs5.xml"](project/src/manifest.cs5.xml)
-- ["src/manifest.cs6.xml"](project/src/manifest.cs6.xml)
-- ["src/update.xml"](project/src/update.xml)
-- ["src/ProjectID.mxi"](project/src/ID.mxi)
+- [".actionScriptProperties"](../project/.actionScriptProperties)
+- ["src/manifest.cs5.xml"](../project/src/manifest.cs5.xml)
+- ["src/manifest.cs6.xml"](../project/src/manifest.cs6.xml)
+- ["src/update.xml"](../project/src/update.xml)
+- ["src/ProjectID.mxi"](../project/src/ID.mxi)
 
 ## Properties
 
