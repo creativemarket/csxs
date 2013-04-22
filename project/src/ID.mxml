@@ -33,8 +33,15 @@
 			protected function reskin(skin:AppSkinInfo):void {
 				var background:RGBColor = skin.panelBackgroundColor.color as RGBColor;
 				var background_hex:uint = (uint(background.red) << 16) | (uint(background.green) << 8) | uint(background.blue);
+
+				var foreground_r:uint   = uint((background.red + 200) % 256);
+				var foreground_g:uint   = uint((background.green + 200) % 256);
+				var foreground_b:uint   = uint((background.blue + 200) % 256);
+				var foreground_hex:uint = (foreground_r << 16) | (foreground_g << 8) | foreground_b;
+
 				setStyle('backgroundColor', background_hex);
 				wrapper.setStyle('backgroundColor', background_hex);
+				hello_world.setStyle('color', foreground_hex);
 			}
 
 			// event handlers
@@ -95,5 +102,7 @@
 
 		]]>
 	</mx:Script>
-	<mx:Canvas x="0" y="0" width="100%" height="100%" id="wrapper" backgroundColor="#DFDFDF"></mx:Canvas>
+	<mx:Canvas x="0" y="0" width="100%" height="100%" id="wrapper" backgroundColor="#DFDFDF">
+		 <mx:Label id="hello_world" text="Hello!" />
+	</mx:Canvas>
 </mx:Application>
