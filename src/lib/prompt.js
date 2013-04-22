@@ -25,7 +25,10 @@ var prompt = module.exports = function(schema, callback) {
 
 			if (schema.required && !value.length) {
 				err = 'This field is required.';
-			} else if (!schema.pattern.test(value)) {
+			} else if (schema.format) {
+				try { value = schema.format(value); }
+				catch (e) { err = e.message; }
+			} else if (schema.pattern && !schema.pattern.test(value)) {
 				err = schema.message || 'Invalid value.';
 			}
 

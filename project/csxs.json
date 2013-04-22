@@ -106,13 +106,13 @@
 		{
 			"manifest": "manifest.cs6.xml",
 			"flex-version": "3.4.0",
-			"cs-products": ["photoshop"],
+			"cs-products": {{cs-products}},
 			"cs-versions": ["6.0"]
 		},
 		{
 			"manifest": "manifest.cs5.xml",
 			"flex-version": "3.4.0",
-			"cs-products": ["photoshop"],
+			"cs-products": {{cs-products}},
 			"cs-versions": ["5.0", "5.5"]
 		}
 	]

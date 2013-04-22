@@ -20,6 +20,7 @@ var path     = require('path');
 var optimist = require('optimist');
 var prompt   = require('../lib/prompt.js');
 var uuid     = require('../lib/uuid.js');
+var HOSTS    = require('../../hosts.json');
 
 
 roto.addTarget('create', {
@@ -64,6 +65,22 @@ roto.addTarget('create', {
 			pattern: /^[a-zA-Z0-9\s]+$/,
 			message: 'Can only contain letters, numbers, and spaces.',
 			required: true
+		},
+		{
+			key: 'cs-products',
+			title: 'Creative Suite Products',
+			description: 'Please list (comma-separated). Options: photoshop, illustrator, indesign, flash, fireworks, dreamweaver, premiere, prelude',
+			required: true,
+			format: function(value) {
+				var i, n;
+				var items = _.without(_.uniq(value.toLowerCase().split(/\s*,+\s*/)), '');
+				for (i = 0, n = items.length; i < n; i++) {
+					if (!HOSTS['6.0'].hasOwnProperty(items[i])) {
+						throw new Error('Unknown item: "' + items[i] + '"');
+					}
+				}
+				return JSON.stringify(items);
+			}
 		},
 	];
 

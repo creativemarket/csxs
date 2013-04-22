@@ -13,9 +13,10 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-var _     = require('lodash');
-var fs    = require('fs');
-var spawn = require('child_process').spawn;
+var _       = require('lodash');
+var fs      = require('fs');
+var spawn   = require('child_process').spawn;
+var project = require('../lib/project.js');
 
 /**
  * Options:
