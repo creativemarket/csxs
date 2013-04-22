@@ -149,4 +149,33 @@ All project settings live in ["csxs.json"](project/csxs.json). The settings are 
 			</table>
 		</td>
 	</tr>
+	<tr>
+		<td valign="top"><code>"builds"</code></td>
+		<td valign="top">
+			An array containing the configuration for the individual builds that make up the *.zxp package.
+			Each item in the array extends the base project configuration and must have the following properties defined:
+			<table width="100%">
+				<tr>
+					<th align="left" width="100px">Property</th>
+					<th align="left">Description</th>
+				</tr>
+				<tr>
+					<td valign="top"><code>"manifest"</code></td>
+					<td valign="top">The filename of the XML manifest in the "src" folder to compile from.</td>
+				</tr>
+				<tr>
+					<td valign="top"><code>"flex-version"</code></td>
+					<td valign="top">Flex compiler version.</td>
+				</tr>
+				<tr>
+					<td valign="top"><code>"cs-products"</code></td>
+					<td valign="top">An array containing the Creative Suite products to target. Possible items: "photoshop", "illustrator", "indesign", "flash", "fireworks", "dreamweaver", "premiere", "prelude".</td>
+				</tr>
+				<tr>
+					<td valign="top"><code>"cs-versions"</code></td>
+					<td valign="top">An array containing all Creative Suite versions to target. Possible items: "6.0", "5.5", "5.0".</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
 </table>
