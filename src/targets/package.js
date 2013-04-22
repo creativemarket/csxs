@@ -39,6 +39,11 @@ roto.addTarget('package', {
 				location: '.certificate-self.p12',
 				password: 'password'
 			};
+			console.log(roto.colorize('WARNING: You should provide a certificate from a valid issuing', 'yellow'));
+			console.log(roto.colorize('certificate authority (IA) to prevent warnings during installation.', 'yellow'));
+			console.log(roto.colorize('http://cssdk.host.adobe.com/sdk/1.0/docs/WebHelp/programmers_guide/Deploy.htm', 'gray'));
+			console.log(roto.colorize('https://github.com/creativemarket/csxs/blob/master/docs/configuration.md#certificate', 'gray'));
+
 			if (!fs.existsSync(config.certificate.location)) {
 				return roto.executeTask('target:certificate', {
 					password : config.certificate.password,
