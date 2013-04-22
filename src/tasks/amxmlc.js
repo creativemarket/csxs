@@ -15,8 +15,40 @@
 
 var _       = require('lodash');
 var fs      = require('fs');
+var path    = require('path');
 var spawn   = require('child_process').spawn;
 var project = require('../lib/project.js');
+var hosts   = require('../lib/hosts.js');
+
+/**
+ * Options:
+ * - input
+ * - output
+ * - cs-products
+ * - cs-versions
+ */
+
+roto.defineTask('csxs.amxmlc_manifest', function(callback, options) {
+	var i, j, n, range, host;
+	var list_hosts = [];
+	var config_products = options['cs-products'];
+	var config_versions = options['cs-versions'];
+	for (i = 0, n = config_products.length; i < n; i++) {
+		host  = hosts.getProduct(config_products[i]);
+		range = hosts.getVersionRange(config_products[i], config_versions);
+		for (j = 0; j < host.ids.length; j++) {
+			list_hosts.push('<Host Name="' + host.ids[j] + '" Version="[' + range.min + ',' + range.max + ']" />');
+		}
+	}
+
+	roto.executeTask('template', {
+		files  : path.relative(process.cwd(), options.input),
+		output : options.output,
+		data   : _.extend({}, config, {
+			'list-hosts': list_hosts.join('\n\t\t\t')
+		})
+	}, callback);
+});
 
 /**
  * Options:

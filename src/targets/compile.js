@@ -108,26 +108,11 @@ roto.addTarget('compile', {
 	// prepare build directory
 	roto.addTask('dir-remove', {path: folder_build});
 	roto.addTask('dir-copy', {from: './assets', to: folder_build + '/assets'});
-	roto.addTask('template', function() {
-		var i, j, n, range, host;
-		var list_hosts = [];
-		var config_products = options['cs-products'];
-		var config_versions = options['cs-versions'];
-		for (i = 0, n = config_products.length; i < n; i++) {
-			host  = hosts.getProduct(config_products[i]);
-			range = hosts.getVersionRange(config_products[i], config_versions);
-			for (j = 0; j < host.ids.length; j++) {
-				list_hosts.push('<Host Name="' + host.ids[j] + '" Version="[' + range.min + ',' + range.max + ']" />');
-			}
-		}
-
-		return {
-			files  : path.relative(process.cwd(), path_manifest),
-			output : folder_build + '/CSXS/manifest.xml',
-			data   : _.extend({}, config, {
-				'list-hosts': list_hosts.join('\n\t\t\t')
-			})
-		};
+	roto.addTask('csxs.amxmlc_manifest', function() {
+		return _.extend({}, options, {
+			input: path_manifest,
+			output: folder_build + '/CSXS/manifest.xml',
+		});
 	});
 
 	// copy jsx scripts

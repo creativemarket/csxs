@@ -126,14 +126,14 @@ roto.addTarget('package', {
 			for (j = 0; j < settings['cs-products'].length; j++) {
 				host_key = settings['cs-products'][j];
 				version_range = get_version_range(host_key, settings['cs-versions']);
-				list_files.push('<file destination="" file-type="CSXS" products="' + hosts.getProduct(host_key).name + '" maxVersion="' + version_range.max + '" minVersion="' + version_range.min + '" source="' + filename_zxp + '" />');
+				list_files.push('<file destination="" file-type="CSXS" products="' + hosts.getProduct(host_key).familyname + '" maxVersion="' + version_range.max + '" minVersion="' + version_range.min + '" source="' + filename_zxp + '" />');
 			}
 		}
 
 		// create <product> list
 		for (host_key in product_versions) {
 			if (product_versions.hasOwnProperty(host_key)) {
-				list_products.push('<product familyname="' + hosts.getProduct(host_key).name + '" maxversion="' + product_versions[host_key].max + '" primary="true" version="' + product_versions[host_key].min + '"/>');
+				list_products.push('<product familyname="' + hosts.getProduct(host_key).familyname + '" maxversion="' + product_versions[host_key].max + '" primary="true" version="' + product_versions[host_key].min + '" />');
 			}
 		}
 
