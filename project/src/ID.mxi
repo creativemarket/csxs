@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <macromedia-extension id="{{id}}" name="{{name}}" requires-restart="true" version="{{version}}" icon="icon.png">
-	<update method="directlink" url="{{update}}" />
+	{{#if update}}<update method="directlink" url="{{update}}" />{{/if}}
 	<author name="{{author}}"/>
 	<description><![CDATA[{{{description}}}]]></description>
 	<license-agreement><![CDATA[{{{license-agreement}}}]]></license-agreement>
