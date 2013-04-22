@@ -110,8 +110,7 @@ roto.addTarget('create', {
 		var files = roto.findFiles([
 			'csxs.json',
 			'README.md',
-			'src/ID.jsx',
-			'.actionScriptProperties'
+			'src/ID.jsx'
 		]);
 
 		var queue = async.queue(function(file, callback) {

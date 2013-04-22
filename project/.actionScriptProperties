@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="{{id}}.mxml" projectUUID="{{uuid}}" version="10">
-	<compiler additionalCompilerArguments="-locale en_US -define=CONFIG::debug,true -define=CONFIG::release,false -define=CONFIG::version,&quot;'0.0.0'&quot;" autoRSLOrdering="false" copyDependentFiles="false" flexSDK="Extension Builder 3.4" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="false" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="false" includeNetmonSwc="false" outputFolderPath="build/bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="false" verifyDigests="true" warn="true">
+<actionScriptProperties analytics="false" mainApplicationPath="{{basename}}.mxml" projectUUID="{{uuid}}" version="10">
+	<compiler additionalCompilerArguments="-locale en_US {{compiler-arguments}}" autoRSLOrdering="false" copyDependentFiles="false" flexSDK="Extension Builder 3.4" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="false" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="false" includeNetmonSwc="false" outputFolderPath="build/bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="false" verifyDigests="true" warn="true">
 		<compilerSourcePath>
 			<compilerSourcePathEntry kind="1" linkType="1" path="src"/>
 		</compilerSourcePath>
@@ -15,7 +15,7 @@
 		<sourceAttachmentPath/>
 	</compiler>
 	<applications>
-		<application path="{{id}}.mxml"/>
+		<application path="{{basename}}.mxml"/>
 	</applications>
 	<modules/>
 	<buildCSSFiles/>

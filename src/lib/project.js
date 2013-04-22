@@ -13,7 +13,8 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-var path = require('path');
+var _       = require('lodash');
+var path    = require('path');
 var project = module.exports = {};
 
 /**
@@ -40,4 +41,49 @@ project.getChangelogs = function() {
 	});
 
 	return files;
+};
+
+/**
+ * Returns arguments to use with the AXMLC compiler.
+ *
+ * @param {object} config
+ * @param {object} options
+ * @returns {array}
+ */
+project.getCompilerArguments = function(config, options) {
+	var i, n, key, value;
+	var properties, custom_args;
+	var args = [];
+
+	// conditional compiler arguments
+	properties = _.extend({
+		'debug'   : options.profile === 'debug',
+		'release' : options.profile === 'release',
+		'version' : config.version
+	}, config.properties);
+
+	// custom flags
+	custom_args = config['compiler-arguments'];
+	if (Array.isArray(custom_args)) {
+		for (i = 0, n = custom_args.length; i < n; i++) {
+			args.push(custom_args[i]);
+		}
+	}
+
+	// user defined constants
+	for (key in properties) {
+		value = properties[key];
+		if (value && typeof value === 'object') {
+			value = value[options.profile];
+		}
+		if (properties.hasOwnProperty(key) && ((typeof value !== 'object' && typeof value !== 'array') || properties[key] === null)) {
+			args.push('-define=CONFIG::' + key + ',' + JSON.stringify(value));
+		}
+	}
+
+	if (parseInt(options.ver_flex, 10) >= 4) {
+		args.push('-includes=mx.managers.systemClasses.MarshallingSupport');
+	}
+
+	return args;
 };

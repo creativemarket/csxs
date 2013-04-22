@@ -6,7 +6,7 @@
 	</ExtensionList>
 	<ExecutionEnvironment>
 		<HostList>
-			{{{list-hosts}}
+			{{{list-hosts}}}
 		</HostList>
 		<LocaleList>
 			<Locale Code="All" />

@@ -28,7 +28,9 @@ var spawn = require('child_process').spawn;
  */
 
 roto.defineTask('csxs.amxmlc', function(callback, options) {
-	var beautify = function(str) {
+	var args, args_extra, axmlc, beautify, i, n;
+
+	beautify = function(str) {
 		return String(str)
 			.replace(/(.+?) line: (\d+)(?: col:? \d+)?Warning: ([^\n]+)/g, roto.colorize('$1', 'white') + ' line $2\n' + roto.colorize('WARNING: $3', 'yellow')) // warnings
 			.replace(/(.+?)\((\d+)\): (?:col:? \d+ )?Warning: ([^\n]+)/g, roto.colorize('$1', 'white') + ' line $2\n' + roto.colorize('WARNING: $3', 'yellow')) // warnings
@@ -41,7 +43,7 @@ roto.defineTask('csxs.amxmlc', function(callback, options) {
 	};
 
 	// base compiler args
-	var args = [
+	args = [
 		'-verify-digests',
 		'-warnings=true',
 		'-use-network=true',
@@ -54,35 +56,10 @@ roto.defineTask('csxs.amxmlc', function(callback, options) {
 		'-library-path+=' + config.flex[options.ver_flex].join(',')
 	];
 
-	// conditional compiler args
-	var properties = _.extend({
-		'debug'   : options.profile === 'debug',
-		'release' : options.profile === 'release',
-		'version' : config.version
-	}, config.properties);
-
-	// custom flags
-	var custom_args = config['compiler-arguments'];
-	if (Array.isArray(custom_args)) {
-		for (var i = 0, n = custom_args.length; i < n; i++) {
-			args.push(custom_args[i]);
-		}
-	}
-
-	// user defined constants
-	var key, value;
-	for (key in properties) {
-		value = properties[key];
-		if (value && typeof value === 'object') {
-			value = value[options.profile];
-		}
-		if (properties.hasOwnProperty(key) && ((typeof value !== 'object' && typeof value !== 'array') || properties[key] === null)) {
-			args.push('-define=CONFIG::' + key + ',' + JSON.stringify(value));
-		}
-	}
-
-	if (parseInt(options.ver_flex, 10) >= 4) {
-		args.push('-includes=mx.managers.systemClasses.MarshallingSupport');
+	// extended arguments
+	args_extra = project.getCompilerArguments(config, options);
+	for (i = 0, n = args_extra.length; i < n; i++) {
+		args.push(args_extra[i]);
 	}
 
 	args.push('--source-path');

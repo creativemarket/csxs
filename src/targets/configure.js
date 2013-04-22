@@ -13,9 +13,11 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
+var _       = require('lodash');
 var fs      = require('fs');
 var path    = require('path');
 var spawn   = require('child_process').spawn;
+var project = require('../lib/project.js');
 
 
 roto.addTarget('configure', {
@@ -51,6 +53,20 @@ roto.addTarget('configure', {
 		return {
 			from: './src/' + config.basename + '.jsx',
 			to: './' + config.basename + '.jsx'
+		};
+	});
+
+	roto.addTask('csxs.fs_copy', {
+		from : path.resolve(__dirname, '../../project/.actionScriptProperties'),
+		to   : './.actionScriptProperties'
+	});
+
+	roto.addTask('template', function() {
+		return {
+			files : '.actionScriptProperties',
+			data  : _.extend({}, config, {
+				'compiler-arguments': project.getCompilerArguments(config, options).join(' ')
+			})
 		};
 	});
 
