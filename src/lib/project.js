@@ -57,7 +57,7 @@ project.getCompilerArguments = function(config, options) {
 
 	// conditional compiler arguments
 	properties = _.extend({
-		'debug'   : options.profile === 'debug',
+		'debug'   : options.profile !== 'release',
 		'release' : options.profile === 'release',
 		'version' : config.version
 	}, config.properties);
