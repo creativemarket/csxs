@@ -133,7 +133,7 @@ roto.addTarget('compile', {
 				path_src    : folder_src,
 				path_amxmlc : path_amxmlc,
 				path_mxml   : path_mxml,
-				path_output : folder_build + '/' + config.basename + '.swf'
+				path_output : folder_build + '/' + path.basename(path_mxml, '.mxml') + '.swf'
 			};
 		});
 	};
