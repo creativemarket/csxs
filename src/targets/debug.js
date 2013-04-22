@@ -122,7 +122,6 @@ roto.addTarget('debug', {
 	if (options['compile'] !== false) {
 		roto.addTask('target:compile', function() {
 			var opts = _.extend({debug: true}, build, options);
-			console.dir(opts);
 			return opts;
 		});
 	}

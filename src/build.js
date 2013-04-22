@@ -21,6 +21,8 @@ global.roto       = null;
 module.exports = function(roto) {
 	global.roto = roto;
 	roto.defaultTarget = null;
+	roto.options.indent = true;
+	roto.options.colorize = true;
 
 	require('./tasks/config.js');
 	require('./tasks/git.js');
