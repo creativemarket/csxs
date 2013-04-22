@@ -1,16 +1,22 @@
 {
 	"name": "csxs",
-	"description": "A build tool for Adobe® Creative Suite® extensions. Create, compile, debug, package, and deploy to S3 with ease!",
-	"keywords": ["adobe","creative suite","extension","csxs","build"],
 	"version": "0.0.1",
+	"description": "A build tool for Adobe® Creative Suite® extensions. Create, compile, debug, package, and deploy to S3 with ease!",
+	"keywords": ["adobe","creative suite","extension","plugin","csxs","build","zxp","photoshop","illustrator","indesign","cs"],
+	"homepage": "https://github.com/creativemarket/csxs",
 	"author": "Brian Reavis <brian@creativemarket.com>",
+	"bugs": "https://github.com/creativemarket/csxs/issues",
+	"license": {
+		"name": "Apache License, Version 2.0",
+		"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+	},
+	"preferGlobal": true,
 	"bin": {"csxs": "./bin/csxs.js"},
 	"main": "./lib/csxs.js",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/creativemarket/csxs.git"
 	},
-	"preferGlobal": true,
 	"dependencies": {
 		"async": "0.2.X",
 		"roto": "0.3.X",
@@ -18,8 +24,6 @@
 		"optimist": "0.3.X",
 		"jsmin": "1.0.X"
 	},
-	"devDependencies": {},
-	"engines": {
-		"node": "*"
-	}
+	"engines": {"node": ">= 0.8"},
+	"os": ["win32","darwin"]
 }
