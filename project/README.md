@@ -2,9 +2,9 @@
 
 ### Requirements
 
-With the automated build system, [Flash Builder](http://www.adobe.com/products/flash-builder.html)
+With the [CSXS](https://github.com/creativemarket/csxs) automated build system, [Flash Builder](http://www.adobe.com/products/flash-builder.html)
 and the [CS Extension Builder Plugin](http://www.adobe.com/devnet/creativesuite/cs-extension-builder.html)
-are not needed to compile, test, or package extensions. This means you can use Sublime Text or any other
+are not needed to compile, test, or package the extension. This means you can use Sublime Text or any other
 editor for development.
 
   * Download the [Creative Suite SDK](http://www.adobe.com/devnet/creativesuite.html)
@@ -16,8 +16,8 @@ editor for development.
 ## Development
 
 ```sh
-# compiles, installs, and puts photoshop into debug mode:
-$ csxs debug
+# compiles, installs, and puts photoshop into debug mode
+$ csxs debug --cs-version=6 --cs-product=photoshop
 ```
 
 ### Available Options
@@ -28,26 +28,34 @@ $ csxs debug
 		<td>Displays all available build targets.</td>
 	</tr>
 	<tr>
-		<td><code>--cs-version</code></td>
-		<td>The version of Creative Suite to launch when debugging. If not provided, the newest version will be used.</td>
+		<td><code>--launch</code></td>
+		<td>Launches a new instance of the selected Creative Suite application.</td>
 	</tr>
 	<tr>
-		<td><code>--flex-version</code></td>
-		<td>Overrides "flex-version" set in csxs.json.</td>
+		<td><code>--cs-version</code></td>
+		<td>Creative Suite version (e.g. "5", "5.5", "6").</td>
+	</tr>
+	<tr>
+		<td><code>--cs-product</code></td>
+		<td>Creative Suite application (e.g. "photoshop", "illustrator", etc).</td>
 	</tr>
 	<tr>
 		<td><code>--fdb</code></td>
-		<td>If not provided, debug mode will show a live view of "flashlog.txt" instead of attempting to start the Flex debugger.</td>
+		<td>Use Flex Debugger instead of live display of "flashlog.txt" contents.</td>
 	</tr>
 	<tr>
 		<td><code>--no-compile</code></td>
-		<td>When used with the "debug" target, this will disable the compilation step.</td>
-	</tr>
-	<tr>
-		<td><code>--launch</code></td>
-		<td>When used with the "debug" target, this will cause a new instance of Creative Suite to be launched.</td>
+		<td>Disables the compilation step.</td>
 	</tr>
 </table>
+
+## Packaging
+
+To build a *.zxp installer without publishing the extension, run:
+
+```sh
+$ csxs package
+```
 
 ## Public Releases
 
