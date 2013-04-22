@@ -16,8 +16,14 @@
 var fs = require('fs');
 var spawn = require('child_process').spawn;
 
+var task_symlink = function(callback, options) {
+	var args = ['-s', options.from, options.to];
+	console.log(roto.colorize('ln ' + args.join(' '), 'magenta'));
+	var ln = spawn('ln', args);
+	ln.on('exit', function() { callback(); });
+};
 
-roto.defineTask('csxs.fs_copy', function(callback, options) {
+var task_copy = function(callback, options) {
 	if (!fs.existsSync(options.from)) {
 		console.error(roto.colorize('ERROR: ', 'red') + 'File not found "' + options.from + '".');
 		return callback(false);
@@ -25,13 +31,7 @@ roto.defineTask('csxs.fs_copy', function(callback, options) {
 	var content = fs.readFileSync(options.from, 'binary');
 	fs.writeFileSync(options.to, content, 'binary');
 	callback();
-});
+};
 
-roto.defineTask('csxs.fs_symlink', function(callback, options) {
-	// TODO: copy on windows?
-
-	var args = ['-s', options.from, options.to];
-	console.log(roto.colorize('ln ' + args.join(' '), 'magenta'));
-	var ln = spawn('ln', args);
-	ln.on('exit', function() { callback(); });
-});
+roto.defineTask('csxs.fs_copy', task_copy);
+roto.defineTask('csxs.fs_symlink', IS_WINDOWS ? task_copy : task_symlink);
