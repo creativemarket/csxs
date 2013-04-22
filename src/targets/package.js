@@ -66,7 +66,7 @@ roto.addTarget('package', {
 		var build = function() {
 			if (!jobs.length) return callback();
 
-			var job          = jobs.pop();
+			var job          = jobs.shift();
 			var config_job   = _.extend({}, config, job);
 			var filename     = uuid() + '.zxp';
 
