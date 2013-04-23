@@ -1,10 +1,12 @@
-<img src="http://static.creativemarket.com/images/github/logos/csxs@2x.png" width="215" height="123">
+<a href="https://creativemarket.com"><img src="http://static.creativemarket.com/images/github/logos/csxs@2x.png" width="215" height="123"></a>
 
 What is this? A command line tool written in [node.js](http://nodejs.org/) for compiling, packaging,
 debugging, and deploying extensions for Adobe&reg; Creative Suite&reg;. It's easy as to use and as it is powerful.
 
 It is designed to solve workflow problems and constraints that come from using [Flash Builder](http://www.adobe.com/devnet/flash-builder.html).
 As an added bonus, projects created with this tool contain boilerplate to resolve strange platform bugs we've encountered.
+
+We used to it to build our [Creative Market Photoshop Extension](https://creativemarket.com/photoshop-extension).
 
 ### Advantages
 
