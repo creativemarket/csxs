@@ -1,0 +1,194 @@
+{
+	"type": "object",
+	"description": "Schema for 'csxs.json' configuration files.",
+	"extends": {"$ref": "/definitions/base_properties"},
+	"additionalProperties": true,
+	"properties": {
+		"id": {
+			"type": "string",
+			"required": true
+		},
+		"version": {
+			"type": "string",
+			"required": true,
+			"pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+		},
+		"name": {
+			"type": "string",
+			"required": true
+		},
+		"author": {
+			"type": "string",
+			"required": true
+		},
+		"description": {
+			"type": "string",
+			"required": false
+		},
+		"ui-access": {
+			"type": "string",
+			"required": false
+		},
+		"license-agreement": {
+			"type": "string",
+			"required": false
+		},
+		"icons": {
+			"required": true
+		},
+		"size": {
+			"required": true
+		},
+		"flex": {
+			"required": true,
+			"type": "object"
+		},
+		"builds": {
+			"type": "array",
+			"required": true,
+			"items": {
+				"type": "object",
+				"extends": {"$ref": "/definitions/base_properties"},
+				"properties": {
+					"manifest": {
+						"type": "string",
+						"required": true
+					},
+					"flex-version": {
+						"type": "string",
+						"required": true,
+						"pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+					},
+					"cs-products": {
+						"type": "array",
+						"required": true,
+						"uniqueItems": true,
+						"items": {
+							"type": "string"
+						}
+					},
+					"cs-versions": {
+						"type": "array",
+						"required": true,
+						"uniqueItems": true,
+						"items": {
+							"type": "string",
+							"pattern": "^[0-9]+\\.[0-9]+$"
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"dimensions": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"width": {"type": "integer", "required": true},
+				"height": {"type": "integer", "required": true}
+			}
+		},
+		"base_properties": {
+			"type": "object",
+			"properties": {
+				"properties": {
+					"type": "object",
+					"patternProperties": {
+						"^.*$": {
+							"description": "must be a scalar value (or an object containing only \"debug\" and \"release\" properties)",
+							"oneOf": [
+								{"type": "string"},
+								{"type": "number"},
+								{"type": "boolean"},
+								{"type": "null"},
+								{
+									"type": "object",
+									"properties": {
+										"debug": {
+											"required": true,
+											"oneOf": [
+												{"type": "string"},
+												{"type": "number"},
+												{"type": "boolean"},
+												{"type": "null"}
+											]
+										},
+										"release": {
+											"required": true,
+											"oneOf": [
+												{"type": "string"},
+												{"type": "number"},
+												{"type": "boolean"},
+												{"type": "null"}
+											]
+										}
+									}
+								}
+							]
+						}
+					}
+				},
+				"icons": {
+					"type": "object",
+					"additionalProperties": false,
+					"properties": {
+						"light": {
+							"type": "object",
+							"required": true,
+							"additionalProperties": true,
+							"properties": {
+								"normal": {"type": "string", "required": false},
+								"hover": {"type": "string", "required": false},
+								"disabled": {"type": "string", "required": false}
+							}
+						},
+						"dark": {
+							"type": "object",
+							"required": true,
+							"additionalProperties": true,
+							"properties": {
+								"normal": {"type": "string", "required": false},
+								"hover": {"type": "string", "required": false},
+								"disabled": {"type": "string", "required": false}
+							}
+						}
+					}
+				},
+				"size": {
+					"type": "object",
+					"properties": {
+						"normal": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"width": {"type": "integer", "required": true},
+								"height": {"type": "integer", "required": true}
+							}
+						},
+						"min": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"width": {"type": "integer", "required": true},
+								"height": {"type": "integer", "required": true}
+							}
+						},
+						"max": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"width": {"type": "integer", "required": true},
+								"height": {"type": "integer", "required": true}
+							}
+						}
+					}
+				},
+				"compiler-arguments": {
+					"type": "array",
+					"items": {"type": "string"}
+				}
+			}
+		}
+	}
+}

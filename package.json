@@ -22,6 +22,7 @@
 		"roto": "0.3.X",
 		"lodash": "1.1.X",
 		"optimist": "0.3.X",
+		"jsonschema": "git://github.com/brianreavis/jsonschema.git",
 		"jsmin": "1.0.X"
 	},
 	"engines": {"node": ">= 0.8"},

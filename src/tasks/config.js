@@ -13,9 +13,21 @@
  * @author Brian Reavis <brian@creativemarket.com>
  */
 
-var fs     = require('fs');
-var jsmin  = require('jsmin').jsmin;
+var fs         = require('fs');
+var jsmin      = require('jsmin').jsmin;
+var jsonschema = require('jsonschema');
+var schema     = require('../../schema.json');
+var validator  = new jsonschema.Validator();
 
+if (schema.definitions) {
+	for (var key in schema.definitions) {
+		if (schema.definitions.hasOwnProperty(key)) {
+			validator.addSchema(schema.definitions[key], '/definitions/' + key);
+		}
+	}
+}
+
+delete schema.definitions;
 
 roto.defineTask('csxs.config_load', function(callback){
 	var path = process.cwd() + '/csxs.json';
@@ -38,32 +50,49 @@ roto.defineTask('csxs.config_load', function(callback){
 	/**
 	 * Validates configuration.
 	 *
-	 * @param {function} callback
+	 * @param {object} data
+	 * @returns {object}
 	 */
-	var validate = function(data) {
+	var validate = function(data, callback) {
 		if (!data) return 'Configuration empty (csxs.json).';
+		process.stdout.write('Validating csxs.json...');
 
-		// TODO: validate via json schema
-		var required = ['version','id','name','author','icons','size','flex-version','flex','builds'];
-		for (var i = 0, n = required.length; i < n; i++) {
-			if (!data.hasOwnProperty(required[i])) {
-				return 'No "' + required[i] + '" property found in csxs.json.';
+		var message, i, n;
+		var result = validator.validate(data, schema);
+		var err = result.errors;
+
+		if (err.length) process.stdout.write('\n');
+		for (i = 0, n = err.length; i < n; i++) {
+			if (err[i].validator === 'definitions') continue;
+
+			if (err[i].schema.description) {
+				message = '"' + err[i].property + '" ' + err[i].schema.description;
+			} else {
+				message = err[i].stack;
 			}
+
+			message = message.replace('instance.', '');
+			console.error(roto.colorize('ERROR: ', 'red') + message);
 		}
+
+		if (!err.length) {
+			console.log(' [' + roto.colorize('success', 'green') + ']');
+		}
+		return !err.length;
 	};
 
 	if (config) return callback();
+	console.log('Reading project configuration...');
 	read(function(err, data) {
 		if (err) {
 			console.error(roto.colorize('ERROR: ', 'red') + 'Unable to read "csxs.json" at project root (' + err + ').');
 			return callback(false);
 		}
-		err = validate(data);
-		if (err) {
-			console.error(roto.colorize('ERROR: ', 'red') + err);
+		if (!validate(data)) {
 			return callback(false);
+		} else {
+			config = data;
+			callback();
 		}
-		config = data;
-		callback();
 	});
 });
