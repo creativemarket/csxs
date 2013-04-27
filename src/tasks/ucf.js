@@ -18,6 +18,7 @@ var path = require('path');
 
 
 roto.defineTask('csxs.ucf', function(callback, options) {
+	var err = false;
 	var args = [
 		'-jar',
 		path.resolve(__dirname, '../../bin/ucf.jar'),
@@ -35,8 +36,13 @@ roto.defineTask('csxs.ucf', function(callback, options) {
 
 	var ucf = spawn('java', args);
 	ucf.stdout.on('data', function (data) { process.stdout.write(data); });
-	ucf.stderr.on('data', function (data) { process.stderr.write(data); });
+	ucf.stderr.on('data', function (data) { process.stderr.write(data); err = true; });
 	ucf.on('exit', function(code) {
-		return callback();
+		if (err) {
+			console.error(roto.colorize('ERROR: ', 'red') + 'Unable to create ZXP package.');
+			callback(false);
+		} else {
+			callback();
+		}
 	});
 });
