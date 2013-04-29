@@ -150,12 +150,16 @@ roto.addTarget('debug', {
 		}
 
 		// enable flash player logging
-		path_mmcfg = IS_WINDOWS ? folder_home + '/mm.cfg' : '/Library/Application Support/Macromedia/mm.cfg';
-		console.log('Creating "' + path_mmcfg + '"...');
-		fs.writeFileSync(path_mmcfg, [
-			'ErrorReportingEnable=1',
-			'TraceOutputFileEnable=1'
-		].join('\n'), 'utf8');
+		try {
+			path_mmcfg = IS_WINDOWS ? folder_home + '/mm.cfg' : '/Library/Application Support/Macromedia/mm.cfg';
+			console.log('Creating "' + path_mmcfg + '"...');
+			fs.writeFileSync(path_mmcfg, [
+				'ErrorReportingEnable=1',
+				'TraceOutputFileEnable=1'
+			].join('\n'), 'utf8');
+		} catch (e) {
+			console.log(roto.colorize('WARNING: Unable to write "mm.cfg". If debugging doesn\'t work, run with sudo.', 'yellow'));
+		}
 
 		// create empty log
 		console.log('Empty log file at "' + path_log + '"...');
