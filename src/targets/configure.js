@@ -49,14 +49,16 @@ roto.addTarget('configure', {
 	});
 
 	// generate configuration for flash builder
-	if (fs.existsSync('./src/' + config.basename + '.jsx')) {
-		roto.addTask('csxs.fs_symlink', function() {
-			return {
+	roto.addTask(function(callback) {
+		if (fs.existsSync('./src/' + config.basename + '.jsx')) {
+			roto.executeTask('csxs.fs_symlink', {
 				from: './src/' + config.basename + '.jsx',
 				to: './' + config.basename + '.jsx'
-			};
-		});
-	}
+			}, callback);
+		} else {
+			callback();
+		}
+	});
 
 	roto.addTask('csxs.fs_copy', {
 		from : path.resolve(__dirname, '../../project/.actionScriptProperties'),
