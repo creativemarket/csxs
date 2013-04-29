@@ -116,13 +116,15 @@ roto.addTarget('compile', {
 	});
 
 	// copy jsx scripts
-	roto.addTask('csxs.fs_copy', function(callback) {
-		console.log('Copying *.jsx scripts... ');
-		return {
-			from : folder_src + '/' + config.basename + '.jsx',
-			to   : folder_build + '/' + config.basename + '.jsx'
-		};
-	});
+	if (fs.existsSync(folder_src + '/' + config.basename + '.jsx')) {
+		roto.addTask('csxs.fs_copy', function(callback) {
+			console.log('Copying *.jsx scripts... ');
+			return {
+				from : folder_src + '/' + config.basename + '.jsx',
+				to   : folder_build + '/' + config.basename + '.jsx'
+			};
+		});
+	}
 
 	// compile all mxml files
 	var compile_mxml = function(path_mxml) {
