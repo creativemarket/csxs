@@ -78,8 +78,7 @@
 			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/air/servicemonitor.swc",
 			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/air/applicationupdater.swc",
 			"${CSSDK}/CS Flex SDK 4.5.0/frameworks/libs/air/applicationupdater_ui.swc",
-			"${CSSDK}/libs/cslibs/2.0/4.5/release/apedelta.swc",
-			"${CSSDK}/libs/cslibs/2.0/4.5/release/csaw_photoshop.swc"
+			"${CSSDK}/libs/cslibs/2.0/4.5/release/apedelta.swc"
 		],
 		"3.4.0": [
 			"${CSSDK}/libs/CSXSLibrary-2.0-sdk-3.4-public.swc",
@@ -93,8 +92,7 @@
 			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/air/servicemonitor.swc",
 			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/air/applicationupdater.swc",
 			"${CSSDK}/CS Flex SDK 3.4.0/frameworks/libs/air/applicationupdater_ui.swc",
-			"${CSSDK}/libs/cslibs/1.0/3.4/release/apedelta.swc",
-			"${CSSDK}/libs/cslibs/1.0/3.4/release/csaw_photoshop.swc"
+			"${CSSDK}/libs/cslibs/1.0/3.4/release/apedelta.swc"
 		]
 	},
 

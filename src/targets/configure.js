@@ -66,10 +66,20 @@ roto.addTarget('configure', {
 	});
 
 	roto.addTask('template', function() {
+		var build         = config.builds[0];
+		var flex_version  = build['flex-version'] || config['flex-version'];
+		var libraries     = config.flex[flex_version];
+		var libraries_xml = [];
+
+		for (var i = 0, n = libraries.length; i < n; i++) {
+			libraries_xml.push('<libraryPathEntry kind="3" linkType="1" path="' + libraries[i] + '" useDefaultLinkType="false" />');
+		}
+
 		return {
 			files : '.actionScriptProperties',
 			data  : _.extend({}, config, {
-				'compiler-arguments': project.getCompilerArguments(config, options).join(' ')
+				'compiler-arguments': project.getCompilerArguments(config, options).join(' '),
+				'libraries': libraries_xml.join('\n\t\t\t')
 			})
 		};
 	});
@@ -77,7 +87,7 @@ roto.addTarget('configure', {
 	roto.addTask('csxs.amxmlc_manifest', function() {
 		return _.extend({}, config.builds[0], {
 			input: 'src/manifest.cs6.xml',
-			output: '.staged-extension/CSXS/manifest.xml',
+			output: '.staged-extension/CSXS/manifest.xml'
 		});
 	});
 

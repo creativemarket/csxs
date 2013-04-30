@@ -1,6 +1,6 @@
 {
 	"name": "csxs",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "A build tool for Adobe® Creative Suite® extensions. Create, compile, debug, package, and deploy to S3 with ease!",
 	"keywords": ["adobe","creative suite","extension","plugin","csxs","build","zxp","photoshop","illustrator","indesign","cs"],
 	"homepage": "https://github.com/creativemarket/csxs",

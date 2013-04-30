@@ -5,12 +5,8 @@
 			<compilerSourcePathEntry kind="1" linkType="1" path="src"/>
 		</compilerSourcePath>
 		<libraryPath defaultLinkType="1">
-			<libraryPathEntry kind="4" path=""/>
-			<libraryPathEntry kind="3" linkType="2" path="${CSLIBS}/1.0/3.4/release/apedelta.swc" useDefaultLinkType="false"/>
-			<libraryPathEntry kind="3" linkType="1" path="${CSAR}/release/ps_host_adapter.swc" useDefaultLinkType="false"/>
-			<libraryPathEntry kind="3" linkType="1" path="${CSLIBS}/1.0/3.4/release/csaw_photoshop.swc" useDefaultLinkType="false"/>
-			<libraryPathEntry kind="3" linkType="1" path="${CSAR}/release/CSXSLibrary-2.0-sdk-3.4-public.swc" useDefaultLinkType="false"/>
-			<libraryPathEntry kind="3" linkType="1" path="${CSAR}/release/MXThemeSync.swc" useDefaultLinkType="false"/>
+			<libraryPathEntry kind="4" path="" />
+			{{{libraries}}}
 		</libraryPath>
 		<sourceAttachmentPath/>
 	</compiler>

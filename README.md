@@ -1,6 +1,6 @@
 <a href="https://creativemarket.com"><img src="http://static.creativemarket.com/images/github/logos/csxs@2x.png" width="215" height="123"></a>
 
-What is this? A command line tool written in [node.js](http://nodejs.org/) for compiling, packaging,
+What is this? A command line tool written in [node.js](http://nodejs.org/) for creating, compiling, packaging,
 debugging, and deploying extensions for Adobe&reg; Creative Suite&reg;. It's easy as to use and as it is powerful.
 
 It is designed to solve workflow problems and constraints that come from using [Flash Builder](http://www.adobe.com/devnet/flash-builder.html).
