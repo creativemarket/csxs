@@ -84,6 +84,11 @@ if (options['help']) {
 // execute build
 // ------------------------------------------------------------------------------------
 
-roto.run(target, options, function(success) {
-	process.exit(success !== false ? 0 : 1);
-});
+if (target === 'compile') {
+	process.stderr.write(colorize('ERROR: ', 'red') + ' The "compile" target cannot be run explicitly.\n');
+	process.exit(1);
+} else {
+	roto.run(target, options, function(success) {
+		process.exit(success !== false ? 0 : 1);
+	});
+}
