@@ -61,7 +61,7 @@ roto.defineTask('csxs.amxmlc_manifest', function(callback, options) {
  */
 
 roto.defineTask('csxs.amxmlc', function(callback, options) {
-	var args, args_extra, axmlc, beautify, i, n;
+	var args, args_extra, amxmlc, beautify, i, n;
 
 	beautify = function(str) {
 		return String(str)
@@ -102,7 +102,7 @@ roto.defineTask('csxs.amxmlc', function(callback, options) {
 
 	// execute compiler
 	console.log(roto.colorize('amxmlc ' + args.join(' '), 'magenta'));
-	var amxmlc = spawn(options.path_amxmlc, args);
+	amxmlc = spawn(options.path_amxmlc, args);
 	amxmlc.stdout.on('data', function (data) { console.log(beautify(data)); });
 	amxmlc.stderr.on('data', function (data) { console.error(beautify(data)); });
 	amxmlc.on('exit', function(code) {
