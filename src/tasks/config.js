@@ -44,6 +44,7 @@ roto.defineTask('csxs.config_load', function(callback){
 		catch (e) { console.dir(e.toString()); return callback('Unable to parse JSON.'); }
 
 		data.basename = data.basename || data.id;
+		data.filename = data.filename || data.basename;
 		callback(null, data);
 	};
 

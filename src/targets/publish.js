@@ -56,8 +56,8 @@ roto.addTarget('publish', {
 
 	// deploy settings
 	roto.addTask(function(callback) {
-		file_zxp_versioned = config.basename + '.' + config.version + '.zxp';
-		file_zxp           = config.basename + '.zxp';
+		file_zxp_versioned = config.filename + '.' + config.version + '.zxp';
+		file_zxp           = config.filename + '.zxp';
 		path_changelog     = 'changes/' + config.version + '.txt';
 		path_s3            = config.s3.path || '/';
 		changes            = '';

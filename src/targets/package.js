@@ -163,14 +163,14 @@ roto.addTarget('package', {
 	roto.addTask('csxs.ucf', function() {
 		return {
 			input    : folder_package,
-			output   : config.basename + '.' + config.version + '.zxp',
+			output   : config.filename + '.' + config.version + '.zxp',
 			keystore : config.certificate.location,
 			password : config.certificate.password
 		}
 	});
 	roto.addTask('csxs.fs_copy', function() {
 		return {
-			from     : config.basename + '.' + config.version + '.zxp',
+			from     : config.filename + '.' + config.version + '.zxp',
 			to       : config.basename + '.zxp'
 		};
 	});

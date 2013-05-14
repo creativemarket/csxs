@@ -42,6 +42,10 @@ All project settings live in ["csxs.json"](../project/csxs.json). The settings a
 		<td valign="top">A description of the extension (shown in Extension Manager).</td>
 	</tr>
 	<tr>
+		<td valign="top"><code>"filename"</code></td>
+		<td valign="top">The name of the file (excluding the extension) to create when packaging.</td>
+	</tr>
+	<tr>
 		<td valign="top"><code>"license-agreement"</code></td>
 		<td valign="top">Legal jargon to display when the user installs the extension.</td>
 	</tr>
