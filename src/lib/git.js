@@ -30,6 +30,7 @@ git.status = function(callback) {
 
 	var proc = spawn('git', ['status']);
 	proc.stdout.on('data', function(data) {
+		str = data + '';
 		result = result || {
 			clean: false,
 			branch : null

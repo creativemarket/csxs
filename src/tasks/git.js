@@ -23,7 +23,7 @@ roto.defineTask('csxs.git_tag', function(callback, options) {
 
 		var args = ['tag', '--force', options.name];
 		console.log(roto.colorize('git ' + args.join(' '), 'magenta'));
-		var process = spawn('git', args);
+		var git = spawn('git', args);
 		git.on('exit', function(code) { callback(); });
 	});
 });
