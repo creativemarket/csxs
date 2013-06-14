@@ -14,6 +14,7 @@
  */
 
 var fs         = require('fs');
+var path       = require('path');
 var jsmin      = require('jsmin').jsmin;
 var jsonschema = require('jsonschema');
 var schema     = require('../../schema.json');
@@ -29,8 +30,8 @@ if (schema.definitions) {
 
 delete schema.definitions;
 
-roto.defineTask('csxs.config_load', function(callback){
-	var path = process.cwd() + '/csxs.json';
+roto.defineTask('csxs.config_load', function(callback, options, target, globalOptions){
+	var path_config = globalOptions.config || 'csxs.json';
 
 	/**
 	 * Reads and parses "csxs.json".
@@ -39,8 +40,9 @@ roto.defineTask('csxs.config_load', function(callback){
 	 */
 	var read = function(callback) {
 		var data;
-		if (!fs.existsSync(path)) return callback('File not found.');
-		try { data = JSON.parse(jsmin(fs.readFileSync(path, 'utf8'))); }
+		var path_config_resolved = path.resolve(process.cwd(), path_config);
+		if (!fs.existsSync(path_config_resolved)) return callback('File not found.');
+		try { data = JSON.parse(jsmin(fs.readFileSync(path_config_resolved, 'utf8'))); }
 		catch (e) { console.dir(e.toString()); return callback('Unable to parse JSON.'); }
 
 		data.basename = data.basename || data.id;
@@ -55,8 +57,8 @@ roto.defineTask('csxs.config_load', function(callback){
 	 * @returns {object}
 	 */
 	var validate = function(data, callback) {
-		if (!data) return 'Configuration empty (csxs.json).';
-		process.stdout.write('Validating csxs.json...');
+		if (!data) return 'Configuration empty (' + path_config + ').';
+		process.stdout.write('Validating ' + path_config + '...');
 
 		var message, i, n;
 		var result = validator.validate(data, schema);
@@ -86,7 +88,7 @@ roto.defineTask('csxs.config_load', function(callback){
 	console.log('Reading project configuration...');
 	read(function(err, data) {
 		if (err) {
-			console.error(roto.colorize('ERROR: ', 'red') + 'Unable to read "csxs.json" at project root (' + err + ').');
+			console.error(roto.colorize('ERROR: ', 'red') + 'Unable to read "' + path_config + '" (' + err + ').');
 			return callback(false);
 		}
 		if (!validate(data)) {

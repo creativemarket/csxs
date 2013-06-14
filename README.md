@@ -154,6 +154,17 @@ $ git tag vX.X.X
 $ git push origin --tags
 ```
 
+### Multiple Configurations
+
+In the rare case that a project needs multiple configurations (i.e. multiple "csxs.json" files), you can specify the configuration file to use from the command line with the `--config` option.
+
+```sh
+$ csxs target --config=csxs_free.json
+$ csxs target --config=csxs_paid.json
+```
+
+If this option is not provided, "csxs.json" will be read by default.
+
 ## Footnotes
 
 * 100% compatible with Mac OSX. Windows support is partial / spotty right now.
