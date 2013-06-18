@@ -29,15 +29,36 @@ var hosts   = require('../lib/hosts.js');
  */
 
 roto.defineTask('csxs.amxmlc_manifest', function(callback, options) {
-	var i, j, n, range, host;
+	var i, j, k, n, range, ranges, host, host_id;
 	var list_hosts = [];
-	var config_products = options['cs-products'];
-	var config_versions = options['cs-versions'];
-	for (i = 0, n = config_products.length; i < n; i++) {
-		host  = hosts.getProduct(config_products[i]);
-		range = hosts.getVersionRange(config_products[i], config_versions);
-		for (j = 0; j < host.ids.length; j++) {
-			list_hosts.push('<Host Name="' + host.ids[j] + '" Version="[' + range.min + ',' + range.max + ']" />');
+
+	// creative suite apps
+	var config_cs_products = options['cs-products'];
+	var config_cs_versions = options['cs-versions'];
+	if (config_cs_products) {
+		for (i = 0, n = config_cs_products.length; i < n; i++) {
+			host  = hosts.getProduct(config_cs_products[i]);
+			range = hosts.getVersionRange(config_cs_products[i], config_cs_versions);
+			for (j = 0; j < host.ids.length; j++) {
+				list_hosts.push('<Host Name="' + host.ids[j] + '" Version="[' + range.min + ',' + range.max + ']" />');
+			}
+		}
+	}
+
+	// creative cloud apps
+	var config_cc_products = options['cc-products'];
+	if (config_cc_products) {
+		for (host_id in config_cc_products) {
+			if (!config_cc_products.hasOwnProperty(host_id)) {
+				continue;
+			}
+			host = hosts.getProduct(host_id);
+			ranges = config_cc_products[host_id];
+			for (j = 0; j < host.ids.length; j++) {
+				for (k = 0; k < ranges.length; k++) {
+					list_hosts.push('<Host Name="' + host.ids[j] + '" Version="[' + ranges[k].min + ',' + ranges[k].max + ']" />');
+				}
+			}
 		}
 	}
 

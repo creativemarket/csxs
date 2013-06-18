@@ -1,8 +1,8 @@
 {
 	"name": "csxs",
 	"version": "0.1.0",
-	"description": "A build tool for Adobe® Creative Suite® extensions. Create, compile, debug, package, and deploy to S3 with ease!",
-	"keywords": ["adobe","creative suite","extension","plugin","csxs","build","zxp","photoshop","illustrator","indesign","cs"],
+	"description": "A build tool for Adobe® Creative Suite® and Creative Cloud® extensions. Create, compile, debug, package, and deploy to S3 with ease!",
+	"keywords": ["adobe","creative suite","creative cloud","extension","plugin","csxs","build","zxp","photoshop","illustrator","indesign","cs"],
 	"homepage": "https://github.com/creativemarket/csxs",
 	"author": "Brian Reavis <brian@creativemarket.com>",
 	"bugs": "https://github.com/creativemarket/csxs/issues",

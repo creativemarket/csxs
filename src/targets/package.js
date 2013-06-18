@@ -102,25 +102,27 @@ roto.addTarget('package', {
 
 	// populate project mxi
 	roto.addTask(function(callback) {
-		var i, j, n, host_key, settings, version_range, filename_zxp;
+		var i, j, n, host_key, settings, version_range, version_ranges, filename_zxp;
 		var product_versions = {};
 		var list_files = [];
 		var list_products = [];
 
-		var get_version_range = function(host_key, cs_versions) {
-			var result = hosts.getVersionRange(host_key, cs_versions);
-
+		var add_version_range = function(host_key, range) {
 			if (!product_versions.hasOwnProperty(host_key)) {
 				product_versions[host_key] = {};
 			}
-			if (!product_versions[host_key].min || parseFloat(result.min) < parseFloat(product_versions[host_key].min)) {
-				product_versions[host_key].min = result.min;
+			if (!product_versions[host_key].min || parseFloat(range.min) < parseFloat(product_versions[host_key].min)) {
+				product_versions[host_key].min = range.min;
 			}
-			if (!product_versions[host_key].max || parseFloat(result.max) > parseFloat(product_versions[host_key].max)) {
-				product_versions[host_key].max = result.max;
+			if (!product_versions[host_key].max || parseFloat(range.max) > parseFloat(product_versions[host_key].max)) {
+				product_versions[host_key].max = range.max;
 			}
+		};
 
-			return result;
+		var get_cs_version_range = function(host_key, cs_versions) {
+			var range = hosts.getVersionRange(host_key, cs_versions);
+			add_version_range(host_key, range);
+			return range;
 		};
 
 		// create <files> list
@@ -128,11 +130,29 @@ roto.addTarget('package', {
 			settings = config.builds[i];
 			filename_zxp = zxps[i];
 
-			for (j = 0; j < settings['cs-products'].length; j++) {
-				host_key = settings['cs-products'][j];
-				version_range = get_version_range(host_key, settings['cs-versions']);
-				list_files.push('<file destination="" file-type="CSXS" products="' + hosts.getProduct(host_key).familyname + '" maxVersion="' + version_range.max + '" minVersion="' + version_range.min + '" source="' + filename_zxp + '" />');
+			// creative suite apps
+			if (settings.hasOwnProperty('cs-products')) {
+				for (j = 0; j < settings['cs-products'].length; j++) {
+					host_key = settings['cs-products'][j];
+					version_range = get_cs_version_range(host_key, settings['cs-versions']);
+					list_files.push('<file destination="" file-type="CSXS" products="' + hosts.getProduct(host_key).familyname + '" maxVersion="' + version_range.max + '" minVersion="' + version_range.min + '" source="' + filename_zxp + '" />');
+				}
 			}
+
+			// creative cloud apps
+			if (settings.hasOwnProperty('cc-products')) {
+				for (host_key in settings['cc-products']) {
+					if (!settings['cc-products'].hasOwnProperty(host_key)) {
+						continue;
+					}
+					version_ranges = settings['cc-products'][host_key];
+					for (j = 0; j < version_ranges.length; j++) {
+						add_version_range(host_key, version_ranges[j]);
+						list_files.push('<file destination="" file-type="CSXS" products="' + hosts.getProduct(host_key).familyname + '" maxVersion="' + version_ranges[j].max + '" minVersion="' + version_ranges[j].min + '" source="' + filename_zxp + '" />');
+					}
+				}
+			}
+
 		}
 
 		// create <product> list
@@ -166,7 +186,7 @@ roto.addTarget('package', {
 			output   : config.filename + '.' + config.version + '.zxp',
 			keystore : config.certificate.location,
 			password : config.certificate.password
-		}
+		};
 	});
 	roto.addTask('csxs.fs_copy', function() {
 		return {

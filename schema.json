@@ -61,7 +61,7 @@
 					},
 					"cs-products": {
 						"type": "array",
-						"required": true,
+						"required": false,
 						"uniqueItems": true,
 						"items": {
 							"type": "string"
@@ -69,12 +69,16 @@
 					},
 					"cs-versions": {
 						"type": "array",
-						"required": true,
+						"required": false,
 						"uniqueItems": true,
 						"items": {
 							"type": "string",
 							"pattern": "^[0-9]+\\.[0-9]+$"
 						}
+					},
+					"cc-products": {
+						"type": "object",
+						"required": false
 					}
 				}
 			}

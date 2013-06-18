@@ -179,6 +179,10 @@ All project settings live in ["csxs.json"](../project/csxs.json). The settings a
 					<td valign="top"><code>"cs-versions"</code></td>
 					<td valign="top">An array containing all Creative Suite versions to target. Possible items: "6.0", "5.5", "5.0".</td>
 				</tr>
+				<tr>
+					<td valign="top"><code>"cc-products"</code></td>
+					<td valign="top">An object mapping Creative Cloud products to target. Each key ("photoshop", "illustrator", "indesign", "flash", "fireworks", "dreamweaver", "premiere", "prelude") should point to an array of version ranges (objects containing "min" and "max" version properties).</td>
+				</tr>
 			</table>
 		</td>
 	</tr>

@@ -82,6 +82,24 @@ roto.addTarget('create', {
 				return JSON.stringify(items);
 			}
 		},
+		{
+			key: 'cc-products',
+			title: 'Creative Cloud Products',
+			description: 'Please list (comma-separated). Options: photoshop, illustrator, indesign, flash, fireworks, dreamweaver, premiere, prelude',
+			required: true,
+			format: function(value) {
+				var i, n;
+				var result = {};
+				var items = _.without(_.uniq(value.toLowerCase().split(/\s*,+\s*/)), '');
+				for (i = 0, n = items.length; i < n; i++) {
+					if (!HOSTS['CC'].hasOwnProperty(items[i])) {
+						throw new Error('Unknown item: "' + items[i] + '"');
+					}
+					result[items[i]] = HOSTS['CC'].version;
+				}
+				return JSON.stringify(items);
+			}
+		}
 	];
 
 	var settings = {};
@@ -104,7 +122,7 @@ roto.addTarget('create', {
 			}
 			settings.basename = settings.id;
 			settings.uuid = uuid();
-			settings.year = (new Date).getFullYear();
+			settings.year = (new Date()).getFullYear();
 			console.log(roto.colorize(hr, 'gray'));
 			callback();
 		});

@@ -1,4 +1,48 @@
 {
+	"CC": {
+		"photoshop": {
+			"familyname": "Photoshop",
+			"name": "Photoshop",
+			"ids": ["PHXS", "PHSP"],
+			"version": {"min": "14.0", "max": "14.9"}
+		},
+		"illustrator": {
+			"familyname": "Illustrator",
+			"name": "Illustrator",
+			"ids": ["ILST"],
+			"version": {"min": "17.0", "max": "17.9"}
+		},
+		"indesign": {
+			"familyname": "InDesign",
+			"name": "InDesign",
+			"ids": ["IDSN"],
+			"version": {"min": "9.0", "max": "9.9"}
+		},
+		"flash": {
+			"familyname": "Flash",
+			"name": "Flash",
+			"ids": ["FLPR"],
+			"version": {"min": "13.0", "max": "13.9"}
+		},
+		"dreamweaver": {
+			"familyname": "Dreamweaver",
+			"name": "Dreamweaver",
+			"ids": ["DRWV"],
+			"version": {"min": "13.0", "max": "13.9"}
+		},
+		"premiere": {
+			"familyname": "Premiere",
+			"name": "Premiere Pro",
+			"ids": ["PPRO"],
+			"version": {"min": "7.0", "max": "7.9"}
+		},
+		"prelude": {
+			"familyname": "Prelude",
+			"name": "Prelude",
+			"ids": ["PRLD"],
+			"version": {"min": "2.0", "max": "2.9"}
+		}
+	},
 	"6.0": {
 		"photoshop": {
 			"familyname": "Photoshop",

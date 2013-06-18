@@ -102,6 +102,11 @@
 	// main project configuration.
 	"builds": [
 		{
+			"manifest": "manifest.cc.xml",
+			"flex-version": "3.4.0",
+			"cc-products": {{cc-products}}
+		},
+		{
 			"manifest": "manifest.cs6.xml",
 			"flex-version": "3.4.0",
 			"cs-products": {{cs-products}},
