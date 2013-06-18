@@ -111,7 +111,7 @@ roto.defineTask('csxs.amxmlc', function(callback, options) {
 	];
 
 	// extended arguments
-	args_extra = project.getCompilerArguments(config, options);
+	args_extra = project.getCompilerArguments(config, options, options.properties);
 	for (i = 0, n = args_extra.length; i < n; i++) {
 		args.push(args_extra[i]);
 	}

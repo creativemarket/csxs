@@ -24,7 +24,6 @@ var hosts   = require('../lib/hosts.js');
 roto.addTarget('compile', {
 	description: 'Compiles SWF, ready for packaging / testing.', hidden: true
 }, function(options) {
-
 	var profile = options.debug !== false ? 'debug' : 'release';
 	var ver_flex;
 	var folder_cssdk;
@@ -160,7 +159,8 @@ roto.addTarget('compile', {
 				path_src    : folder_src,
 				path_amxmlc : path_amxmlc,
 				path_mxml   : path_mxml,
-				path_output : folder_build + '/' + path.basename(path_mxml, '.mxml') + '.swf'
+				path_output : folder_build + '/' + path.basename(path_mxml, '.mxml') + '.swf',
+				properties  : options.properties
 			};
 		});
 	};

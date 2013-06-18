@@ -48,9 +48,10 @@ project.getChangelogs = function() {
  *
  * @param {object} config
  * @param {object} options
+ * @param {object} extra_properties
  * @returns {array}
  */
-project.getCompilerArguments = function(config, options) {
+project.getCompilerArguments = function(config, options, extra_properties) {
 	var i, n, key, value;
 	var properties, custom_args;
 	var args = [];
@@ -60,7 +61,7 @@ project.getCompilerArguments = function(config, options) {
 		'debug'   : options.profile !== 'release',
 		'release' : options.profile === 'release',
 		'version' : config.version
-	}, config.properties);
+	}, config.properties, extra_properties);
 
 	// custom flags
 	custom_args = config['compiler-arguments'];
