@@ -125,6 +125,18 @@ roto.addTarget('package', {
 			return range;
 		};
 
+		var get_cc_product_list = function(product_name) {
+			// http://helpx.adobe.com/extension-manager/kb/general-mxi-elements.html#id_64891
+			var map = {
+				'Illustrator' : 'Illustrator,Illustrator32,Illustrator64',
+				'InCopy'      : 'InCopy,InCopy32,InCopy64',
+				'InDesign'    : 'InDesign,InDesign32,InDesign64',
+				'Photoshop'   : 'Photoshop,Photoshop32,Photoshop64'
+			};
+
+			return map[product_name] || product_name;
+		};
+
 		// create <files> list
 		for (i = 0, n = config.builds.length; i < n; i++) {
 			settings = config.builds[i];
@@ -148,7 +160,7 @@ roto.addTarget('package', {
 					version_ranges = settings['cc-products'][host_key];
 					for (j = 0; j < version_ranges.length; j++) {
 						add_version_range(host_key, version_ranges[j]);
-						list_files.push('<file destination="" file-type="CSXS" products="' + hosts.getProduct(host_key).familyname + '" maxVersion="' + version_ranges[j].max + '" minVersion="' + version_ranges[j].min + '" source="' + filename_zxp + '" />');
+						list_files.push('<file destination="" file-type="CSXS" products="' + get_cc_product_list(hosts.getProduct(host_key).familyname) + '" maxVersion="' + version_ranges[j].max + '" minVersion="' + version_ranges[j].min + '" source="' + filename_zxp + '" />');
 					}
 				}
 			}
